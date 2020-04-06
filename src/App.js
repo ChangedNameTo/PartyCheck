@@ -1,31 +1,45 @@
 import React from 'react';
-import {Input, Container} from 'semantic-ui-react'
+import {Input, Container, Menu, Segment} from 'semantic-ui-react'
 
-const ConsoleLog = ({ children }) => {
-  console.log(children);
-  return false;
-};
+class PartyCheckMenu extends Menu {
+  render() {
+    const {activeItem} = this.state
+
+    return (
+      <Menu>
+        <Container>
+          <Menu.Item
+            name='Home'
+            active={activeItem === 'home'}
+            onCLick={this.props.onCLick}
+          />
+        </Container>
+      </Menu>
+    );
+  }
+}
+
+class Header extends React.Component {
+  render() {
+    return (
+      <PartyCheckMenu
+        onCLick={this.props.onCLick}
+      />
+    );
+  }
+}
 
 class FFLogsInput extends Input {
-  constructor(props) {
-    super(props);
-    this.state = {
-      link: null,
-    }
-  }
-
-  checkAndGo() {
-    this.state.link = i;
-    return (i === 'https://www.fflogs.com/user/reports-list/237412/');
-  }
-
   render() {
     return (
       <div>
-        <ConsoleLog>{this.state.link}</ConsoleLog>
         <Input
+          fluid
+          icon = 'search'
+          iconPosition = 'left'
+          name = "fflogslink"
           placeholder = 'Paste your FFLogs Profile'
-          onChange = {this.checkAndGo()}
+          onChange = {this.props.onChange}
         />
       </div>
     );
@@ -33,20 +47,55 @@ class FFLogsInput extends Input {
 }
 
 class PartyCheck extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      link: null,
+    }
+  }
+
+  goHome(i) {
+    return;
+  }
+
+  checkAndGo(i) {
+    if (i.target.value === 'https://www.fflogs.com/user/reports-list/237412/')
+    {
+      console.log(true);
+      return;
+    }
+    else
+    {
+      console.log(false);
+      return;
+    }
+  }
+
   render() {
     return (
-      <Container>
-        <div>
-          <FFLogsInput />
-        </div>
-      </Container>
+      <div>
+        <Header
+          onCLick={this.goHome}
+        />
+        <Container>
+          <Segment>
+            <div>
+              <FFLogsInput
+                onChange = {this.checkAndGo}
+              />
+            </div>
+          </Segment>
+        </Container>
+      </div>
     );
   }
 }
 
 function App() {
   return (
-    <PartyCheck />
+    <html>
+      <PartyCheck />
+    </html>
   );
 }
 
