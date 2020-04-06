@@ -1,5 +1,6 @@
 import React from 'react';
-import {Input, Container, Menu, Segment} from 'semantic-ui-react'
+import {Input, Container, Menu, Segment, Table} from 'semantic-ui-react'
+import rp from "request-promise";
 
 class PartyCheckMenu extends Menu {
   render() {
@@ -11,7 +12,7 @@ class PartyCheckMenu extends Menu {
           <Menu.Item
             name='Home'
             active={activeItem === 'home'}
-            onCLick={this.props.onCLick}
+            onClick={this.props.onClick}
           />
         </Container>
       </Menu>
@@ -46,12 +47,75 @@ class FFLogsInput extends Input {
   }
 }
 
+function PartyTableRows(props) {
+  rp(props.link)
+    .then(html => console.log(html))
+  console.log('blah')
+  return(
+    <Table.Row>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>4</Table.Cell>
+    </Table.Row>
+  );
+}
+
+class PartyTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      link: props.link,
+    }
+    console.log(this.state.link);
+  }
+
+  generateTable() {
+    if(this.state.link){
+      return (
+        <Container>
+          <Table celled>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Name/Job</Table.HeaderCell>
+                <Table.HeaderCell># Pulls</Table.HeaderCell>
+                <Table.HeaderCell># Kills</Table.HeaderCell>
+                <Table.HeaderCell>Actions</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <PartyTableRows
+              link={this.state.link}
+            />
+          </Table>
+        </Container>
+      );
+    }
+    else {
+      return(
+        <Container>
+          <Segment>
+            Enter a link
+          </Segment>
+        </Container>
+      );
+    }
+  }
+
+  render() {
+    return (
+      this.generateTable()
+    );
+  }
+}
+
 class PartyCheck extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       link: null,
     }
+
+    this.checkAndGo = this.checkAndGo.bind(this);
   }
 
   goHome(i) {
@@ -61,14 +125,11 @@ class PartyCheck extends React.Component {
   checkAndGo(i) {
     if (i.target.value === 'https://www.fflogs.com/user/reports-list/237412/')
     {
-      console.log(true);
-      return;
+      this.setState({
+        link: i.target.value,
+      });
     }
-    else
-    {
-      console.log(false);
-      return;
-    }
+    return;
   }
 
   render() {
@@ -86,6 +147,10 @@ class PartyCheck extends React.Component {
             </div>
           </Segment>
         </Container>
+        <br></br>
+        <PartyTable
+          link={this.state.link}
+        />
       </div>
     );
   }
@@ -93,9 +158,7 @@ class PartyCheck extends React.Component {
 
 function App() {
   return (
-    <html>
-      <PartyCheck />
-    </html>
+    <PartyCheck />
   );
 }
 
