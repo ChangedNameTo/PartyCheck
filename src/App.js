@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Input, Container, Menu, Segment, Table} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
+
+const API_KEY = '57867123b1f24ca0a00384cdb92cc4c7';
 
 function PartyCheckMenu(props) {
   return (
@@ -43,6 +45,7 @@ function FFLogsInput(props) {
 }
 
 function PartyTableRow(props) {
+  console.log(props);
   return(
     <Table.Row>
       <Table.Cell>{props.id}</Table.Cell>
@@ -53,82 +56,57 @@ function PartyTableRow(props) {
   );
 }
 
-class PartyTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows:null,
-      fights:[],
-    }
-  }
-
-  render() {
-    const reports = this.props.reports;
-
-    if(reports){
-      const he_reports = reports.data.filter(function(report) {
-        return(report.title === "Eden's Verse" || report.title === "Trials (Extreme)");
-      });
-      console.log(he_reports);
-
-      he_reports.map((report, number) => {
-        const fight_query = format("https://www.fflogs.com/v1/report/fights/{fight_id}?api_key={api_key}", {
-          fight_id:report.id,
-          api_key:''
-        });
-
-        axios.get(fight_query)
-          .then((response) => {
-            console.log(response.data);
-            var fight = this.state.fights.concat(response.data);
-            this.setState({
-              fights:fight,
-            });
-          })
-        return true;
-      });
-
-      var rows = this.fights.data.map((fight,number) => {
-        return (
-          <PartyTableRow
-            key={fight.id}
-          />
-        )
+function PartyTable({ reports }) {
+  const [fights, setFights] = useState([]);
+  useEffect(() => {
+    if (reports && reports.data) {
+      Promise.all(
+        reports.data
+          .filter(report => report.title === "Eden's Verse" || report.title === "Trials (Extreme)")
+          .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
+      ).then(result => {
+        setFights(result.flatMap((r) => r.data));
       });
     }
-    else {
-      rows = <PartyTableRow/>;
-    }
+  }, [reports, setFights]);
 
-    if(this.props.link){
-      return (
-        <Container>
-          <Table celled>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Name/Job</Table.HeaderCell>
-                <Table.HeaderCell># Pulls</Table.HeaderCell>
-                <Table.HeaderCell># Kills</Table.HeaderCell>
-                <Table.HeaderCell>Actions</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {rows}
-            </Table.Body>
-          </Table>
-        </Container>
-      );
-    }
-    else {
-      return(
-        <Container>
-          <Segment>
-            Enter a link
-          </Segment>
-        </Container>
-      );
-    }
-  }
+  console.log(fights);
+
+  const allies = fights.flatMap(fight => {
+    let allyobj = {};
+    fight.friendlies.forEach(friendly => {
+      let fightArr = [];
+      friendly.fights.forEach(fFight => fightArr.push(fight.fights[fFight.id - 1]));
+      allyobj[friendly.name] = fightArr;
+    });
+    return allyobj;
+  });
+
+  const flatAllies = allies.reduce((merge, entries) =>
+    Object.keys(entries).reduce(
+      (acc, key) => ({ ...acc, [key]: (acc[key] || []).concat(entries[key]) }),
+      merge
+    ),{});
+
+  console.log(flatAllies);
+
+  return (
+    <Container>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Name/Job</Table.HeaderCell>
+            <Table.HeaderCell># Pulls</Table.HeaderCell>
+            <Table.HeaderCell># Kills</Table.HeaderCell>
+            <Table.HeaderCell>Actions</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {Object.keys(flatAllies).map(ally => <PartyTableRow key={ally} name={ally} fights={flatAllies[ally]} />)}
+        </Table.Body>
+      </Table>
+    </Container>
+  );
 }
 
 class PartyCheck extends React.Component {
@@ -156,8 +134,7 @@ class PartyCheck extends React.Component {
 
       const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
         username:i.target.value,
-        // api_key:process.env.API_KEY
-        api_key:''
+        api_key:API_KEY
       });
 
       axios.get(report_query)
