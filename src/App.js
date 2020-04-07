@@ -58,6 +58,7 @@ class PartyTable extends React.Component {
     super(props);
     this.state = {
       rows:null,
+      fights:[],
     }
   }
 
@@ -65,15 +66,32 @@ class PartyTable extends React.Component {
     const reports = this.props.reports;
 
     if(reports){
-      var rows = reports.data.map((report,number) => {
-        console.log(report.id);
+      const he_reports = reports.data.filter(function(report) {
+        return(report.title === "Eden's Verse" || report.title === "Trials (Extreme)");
+      });
+      console.log(he_reports);
+
+      he_reports.map((report, number) => {
+        const fight_query = format("https://www.fflogs.com/v1/report/fights/{fight_id}?api_key={api_key}", {
+          fight_id:report.id,
+          api_key:''
+        });
+
+        axios.get(fight_query)
+          .then((response) => {
+            console.log(response.data);
+            var fight = this.state.fights.concat(response.data);
+            this.setState({
+              fights:fight,
+            });
+          })
+        return true;
+      });
+
+      var rows = this.fights.data.map((fight,number) => {
         return (
           <PartyTableRow
-            key={report.id}
-            id={report.id}
-            title={report.title}
-            start={report.start}
-            end={report.end}
+            key={fight.id}
           />
         )
       });
@@ -119,6 +137,7 @@ class PartyCheck extends React.Component {
     this.state = {
       link: null,
       reports: null,
+      fights:null,
     }
 
     this.checkAndGo = this.checkAndGo.bind(this);
@@ -135,22 +154,19 @@ class PartyCheck extends React.Component {
         link: i.target.value,
       });
 
-      console.log(this.state.link);
-      const query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
+      const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
         username:i.target.value,
         // api_key:process.env.API_KEY
         api_key:''
       });
 
-      console.log(query);
-
-      axios.get(query)
+      axios.get(report_query)
         .then((response) => {
-          console.log(response);
           this.setState({
             reports:response,
           });
         });
+
     }
     return;
   }
