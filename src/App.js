@@ -51,13 +51,71 @@ function PartyTableRow(props) {
       <Table.Cell>{props.name}</Table.Cell>
       <Table.Cell>{props.fights.length}</Table.Cell>
       <Table.Cell>{props.percentage}</Table.Cell>
-      <Table.Cell><Button>Show Fights <Icon name="angle double down" /></Button></Table.Cell>
+      <Table.Cell><Button key={props.name}>Show Fights <Icon name="angle double down" /></Button></Table.Cell>
     </Table.Row>
   );
 }
 
+const getAllies = fights =>
+  fights
+    .flatMap(fight =>
+      fight.friendlies.reduce(
+        (acc, friendly) => ({
+          ...acc,
+          [friendly.name]: {
+            fights: friendly.fights.map(({ id }) => fight.fights[id - 1]),
+            job: friendly.type,
+          }
+        }),
+        {}
+      )
+    )
+    .reduce(
+      (merge, entries) =>
+        Object.keys(entries).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: (acc[key] || []).concat(entries[key])
+          }),
+          merge
+        ),
+      {}
+    );
+
+const collapseAlliesInJob = allies =>
+  Object.keys(allies).reduce(
+    (acc, cur) => ({
+      ...acc,
+      [cur]: allies[cur].flatMap(f => f.fights.map(x => ({ ...x, job: f.job })))
+    }),
+    {}
+  );
+
+const calculatePercentage = fights => {
+  const collapsedInJob = collapseAlliesInJob(getAllies(fights));
+
+  return Object.keys(collapsedInJob).map((x) => {
+    return {
+      name: x,
+      fights: collapsedInJob[x],
+      percentage: collapsedInJob[x]
+        .reduce(
+          (acc, cur, _, src) =>
+            acc + (!isNaN(parseInt(cur.bossPercentage)) ? parseInt(cur.bossPercentage) : 0) / 100 / src.length,
+          0
+        )
+        .toFixed(2),
+      pulls:collapsedInJob[x].length,
+    };
+  });
+};
+
+const sortHelper = (percentage,column) => [].concat(percentage).sort((a,b) => a[column] - b[column])
+
 function PartyTable({ reports }) {
-  const [fights, setFights] = useState([]);
+  const [percentage, setPercentage] = useState([]);
+  const [column, setColumn] = useState('pulls');
+  const [direction, setDirection] = useState('descending');
 
   useEffect(() => {
     if (reports && reports.data) {
@@ -66,79 +124,40 @@ function PartyTable({ reports }) {
           .filter(report => report.title === "Eden's Verse" || report.title === "Trials (Extreme)")
           .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
       ).then(result => {
-        setFights(result.flatMap((r) => r.data));
+        const fights = result.flatMap((r) => r.data);
+        setPercentage(calculatePercentage(fights));
       });
     }
-  }, [reports, setFights]);
+  }, [reports, setPercentage]);
 
-  const allies = fights.flatMap(fight => {
-    let allyobj = {};
-    fight.friendlies.forEach(friendly => {
-      let fightArr = [];
-      friendly.fights.forEach(fFight => fightArr.push(fight.fights[fFight.id - 1]));
-      allyobj[friendly.name] = {fights:[]}
-      allyobj[friendly.name].fights = fightArr;
-      allyobj[friendly.name].job = friendly.type;
-    });
-    return allyobj;
-  }).reduce((merge, entries) =>
-    Object.keys(entries).reduce((acc, key) => ({ ...acc, [key]: (acc[key] || []).concat(entries[key]) }),
-      merge
-    ),{});
-
-  const collapseInJob = Object.keys(allies)
-    .reduce((acc,cur) => {
-      const real_fights = allies[cur].reduce((combined,fight) => [...combined,...fight.fights.map(x => ({...x, job:fight.job}))],[]);
-      return {...acc, [cur]:real_fights};
-    },{});
-
-  const percentage = Object.keys(collapseInJob).map((x) => {
-    return {
-      name:x,
-      fights:collapseInJob[x],
-      percentage:collapseInJob[x].reduce((acc,cur,idx,src) => acc + ((parseInt(cur.bossPercentage)/100)/src.length),0).toFixed(2)
-    }
-  });
-
-  const [column, setColumn] = useState(null);
-  const [data, setData] = useState([]);
-  const [direction, setDirection] = useState('ascending');
-
-  // useEffect(() => setData(percentage),[percentage,setData]);
-
-  const handleSort = (clickedColumn) => {
+  const handleSort = clickedColumn => {
     if(column !== clickedColumn) {
       setColumn(clickedColumn);
       setDirection(direction);
-      setData(_.sortBy(data,[clickedColumn]));
-      return;
-    }
-    else {
-      setData(data.reverse());
+    } else {
       setDirection(direction === 'ascending' ? 'descending' :'ascending');
     }
   }
+
+  const data = direction === 'ascending' ? sortHelper(percentage,column) : sortHelper(percentage,column).reverse();
 
   return (
     <Container>
       <Table compact celled sortable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell
-              // sorted={column === 'name' ? direction : null}
-              // onClick={handleSort('name')}
-            >
+            <Table.HeaderCell>
               Name/Job
             </Table.HeaderCell>
             <Table.HeaderCell
-              // sorted={column === 'pulls' ? direction : null}
-              // onClick={handleSort('pulls')}
+              sorted={column === 'pulls' ? direction : null}
+              onClick={() => handleSort('pulls')}
             >
               # Pulls
             </Table.HeaderCell>
             <Table.HeaderCell
-              // sorted={column === 'pulls' ? direction : null}
-              // onClick={handleSort('pulls')}
+              sorted={column === 'percentage' ? direction : null}
+              onClick={() => handleSort('percentage')}
             >
               Avg. Boss % (0 is a kill)
             </Table.HeaderCell>
@@ -148,10 +167,11 @@ function PartyTable({ reports }) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {percentage.map(ally =>
+          {data.map(ally =>
             <PartyTableRow
               key={ally.name}
               name={ally.name}
+              pulls={ally.pulls}
               fights={ally.fights}
               percentage={ally.percentage}/>)}
         </Table.Body>
