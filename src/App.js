@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import {Input, Container, Menu, Segment, Table, Button, Icon} from 'semantic-ui-react'
-import _ from 'lodash';
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
@@ -46,13 +45,49 @@ function FFLogsInput(props) {
 }
 
 function PartyTableRow(props) {
+  const [visible, setVisible] = useState(false);
+
+  const showFights = () => {
+    setVisible(!visible)
+  }
+
+  const subRows = () => {
+    if(visible) {
+      return (
+        props.fights.map((x,i) => {
+          const fight_date = new Date(x.realtime).toDateString();
+          return(
+            <Fragment>
+              <Table.Row>
+                <Table.Cell>{fight_date}</Table.Cell>
+                <Table.Cell>{x.zoneName}</Table.Cell>
+                <Table.Cell>{(x.bossPercentage / 100)}</Table.Cell>
+                <Table.Cell></Table.Cell>
+              </Table.Row>
+            </Fragment>
+          );
+        })
+      );
+    }
+  };
+
   return(
-    <Table.Row>
-      <Table.Cell>{props.name}</Table.Cell>
-      <Table.Cell>{props.fights.length}</Table.Cell>
-      <Table.Cell>{props.percentage}</Table.Cell>
-      <Table.Cell><Button key={props.name}>Show Fights <Icon name="angle double down" /></Button></Table.Cell>
-    </Table.Row>
+    <Fragment>
+      <Table.Row>
+        <Table.Cell>{props.name}</Table.Cell>
+        <Table.Cell>{props.fights.length}</Table.Cell>
+        <Table.Cell>{props.percentage}</Table.Cell>
+        <Table.Cell>
+          <Button
+            key={props.name}
+            onClick={() => showFights()}
+          >
+            Show Fights <Icon name="angle double down" />
+          </Button>
+        </Table.Cell>
+      </Table.Row>
+      {subRows()}
+    </Fragment>
   );
 }
 
@@ -63,7 +98,9 @@ const getAllies = fights =>
         (acc, friendly) => ({
           ...acc,
           [friendly.name]: {
-            fights: friendly.fights.map(({ id }) => fight.fights[id - 1]),
+            fights: friendly.fights.map(({ id }) => {
+              return {...fight.fights[id - 1],realtime:(fight.start + fight.fights[id - 1].start_time)}
+            }),
             job: friendly.type,
           }
         }),
@@ -141,43 +178,54 @@ function PartyTable({ reports }) {
 
   const data = direction === 'ascending' ? sortHelper(percentage,column) : sortHelper(percentage,column).reverse();
 
-  return (
-    <Container>
-      <Table compact celled sortable>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>
-              Name/Job
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === 'pulls' ? direction : null}
-              onClick={() => handleSort('pulls')}
-            >
-              # Pulls
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === 'percentage' ? direction : null}
-              onClick={() => handleSort('percentage')}
-            >
-              Avg. Boss % (0 is a kill)
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              Actions
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map(ally =>
-            <PartyTableRow
-              key={ally.name}
-              name={ally.name}
-              pulls={ally.pulls}
-              fights={ally.fights}
-              percentage={ally.percentage}/>)}
-        </Table.Body>
-      </Table>
-    </Container>
-  );
+  if(data.length > 0) {
+    return (
+      <Container>
+        <Table compact celled sortable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>
+                Name/Job
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={column === 'pulls' ? direction : null}
+                onClick={() => handleSort('pulls')}
+              >
+                # Pulls
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={column === 'percentage' ? direction : null}
+                onClick={() => handleSort('percentage')}
+              >
+                Avg. Boss % (0 is a kill)
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                Actions
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {data.map(ally =>
+              <PartyTableRow
+                key={ally.name}
+                name={ally.name}
+                pulls={ally.pulls}
+                fights={ally.fights}
+                percentage={ally.percentage}/>)}
+          </Table.Body>
+        </Table>
+      </Container>
+    );
+  }
+  else {
+    return (
+      <Container>
+        <Segment>
+          Please enter a valid FFLogs username.
+        </Segment>
+      </Container>
+    );
+  }
 }
 
 class PartyCheck extends React.Component {
