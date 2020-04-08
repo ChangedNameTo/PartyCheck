@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Input, Container, Menu, Segment, Table, Button, Icon} from 'semantic-ui-react'
+import _ from 'lodash';
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
@@ -57,6 +58,7 @@ function PartyTableRow(props) {
 
 function PartyTable({ reports }) {
   const [fights, setFights] = useState([]);
+
   useEffect(() => {
     if (reports && reports.data) {
       Promise.all(
@@ -91,19 +93,58 @@ function PartyTable({ reports }) {
     },{});
 
   const percentage = Object.keys(collapseInJob).map((x) => {
-    return {name:x,fights:collapseInJob[x],percentage:collapseInJob[x].reduce((acc,cur,idx,src) => acc + ((parseInt(cur.bossPercentage)/100)/src.length),0).toFixed(2)}
+    return {
+      name:x,
+      fights:collapseInJob[x],
+      percentage:collapseInJob[x].reduce((acc,cur,idx,src) => acc + ((parseInt(cur.bossPercentage)/100)/src.length),0).toFixed(2)
+    }
   });
 
-  console.log(percentage);
+  const [column, setColumn] = useState(null);
+  const [data, setData] = useState([]);
+  const [direction, setDirection] = useState('ascending');
+
+  // useEffect(() => setData(percentage),[percentage,setData]);
+
+  const handleSort = (clickedColumn) => {
+    if(column !== clickedColumn) {
+      setColumn(clickedColumn);
+      setDirection(direction);
+      setData(_.sortBy(data,[clickedColumn]));
+      return;
+    }
+    else {
+      setData(data.reverse());
+      setDirection(direction === 'ascending' ? 'descending' :'ascending');
+    }
+  }
+
   return (
     <Container>
       <Table compact celled sortable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name/Job</Table.HeaderCell>
-            <Table.HeaderCell># Pulls</Table.HeaderCell>
-            <Table.HeaderCell>Avg. Boss % (0 is a kill)</Table.HeaderCell>
-            <Table.HeaderCell>Actions</Table.HeaderCell>
+            <Table.HeaderCell
+              // sorted={column === 'name' ? direction : null}
+              // onClick={handleSort('name')}
+            >
+              Name/Job
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              // sorted={column === 'pulls' ? direction : null}
+              // onClick={handleSort('pulls')}
+            >
+              # Pulls
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              // sorted={column === 'pulls' ? direction : null}
+              // onClick={handleSort('pulls')}
+            >
+              Avg. Boss % (0 is a kill)
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Actions
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
