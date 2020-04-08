@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Input, Container, Menu, Segment, Table} from 'semantic-ui-react'
+import {Input, Container, Menu, Segment, Table, Button, Icon} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
@@ -45,13 +45,37 @@ function FFLogsInput(props) {
 }
 
 function PartyTableRow(props) {
-  console.log(props);
+  const pulls = props.fights
+    .map(x => x.fights)
+    .reduce((acc,curr) => [...acc,...curr],[]);
+
+  // const avgPercentage = props.fights
+  //   .map(x => x.fights)
+  //   .reduce((acc,curr) => [...acc,...curr],[])
+  //   .reduce((acc,curr) => acc.concat(parseInt(curr.bossPercentage)/100),[])
+  //   .reduce((acc,curr,idx,src) => {
+  //     if(!isNaN(curr)) {
+  //       return (acc + (curr/src.length));
+  //     }
+  //     else {
+  //       return acc;
+  //     }
+  //   },0).toFixed(2);
+
+    const avgPercentage = props.fights
+      .map(x => x.fights)
+      .reduce((acc,curr) => [...acc,...curr],[])
+      .reduce((acc,curr) => acc.concat(parseInt(curr.bossPercentage)/100),[])
+      .reduce((acc,curr,idx,src) => (!isNaN(curr) ? (acc + (curr/src.length)) : (acc)),0)
+      .toFixed(2);
+
+
   return(
     <Table.Row>
-      <Table.Cell>{props.id}</Table.Cell>
-      <Table.Cell>{props.title}</Table.Cell>
-      <Table.Cell>{props.start}</Table.Cell>
-      <Table.Cell>{props.end}</Table.Cell>
+      <Table.Cell>{props.name}</Table.Cell>
+      <Table.Cell>{pulls.length}</Table.Cell>
+      <Table.Cell>{avgPercentage}</Table.Cell>
+      <Table.Cell><Button>Show Fights <Icon name="angle double down" /></Button></Table.Cell>
     </Table.Row>
   );
 }
@@ -70,14 +94,14 @@ function PartyTable({ reports }) {
     }
   }, [reports, setFights]);
 
-  console.log(fights);
-
   const allies = fights.flatMap(fight => {
     let allyobj = {};
     fight.friendlies.forEach(friendly => {
       let fightArr = [];
       friendly.fights.forEach(fFight => fightArr.push(fight.fights[fFight.id - 1]));
-      allyobj[friendly.name] = fightArr;
+      allyobj[friendly.name] = {fights:[]}
+      allyobj[friendly.name].fights = fightArr;
+      allyobj[friendly.name].job = friendly.type;
     });
     return allyobj;
   });
@@ -88,11 +112,9 @@ function PartyTable({ reports }) {
       merge
     ),{});
 
-  console.log(flatAllies);
-
   return (
     <Container>
-      <Table celled>
+      <Table compact celled sortable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name/Job</Table.HeaderCell>
@@ -104,6 +126,24 @@ function PartyTable({ reports }) {
         <Table.Body>
           {Object.keys(flatAllies).map(ally => <PartyTableRow key={ally} name={ally} fights={flatAllies[ally]} />)}
         </Table.Body>
+        {/* <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colspan='4'>
+              <Menu floated='right' pagination>
+                <Menu.Item as='a' icon>
+                  <Icon name='chevron left' />
+                </Menu.Item>
+                <Menu.Item as='a'>1</Menu.Item>
+                <Menu.Item as='a'>2</Menu.Item>
+                <Menu.Item as='a'>3</Menu.Item>
+                <Menu.Item as='a'>4</Menu.Item>
+                <Menu.Item as='a' icon>
+                  <Icon name='chevron right' />
+                </Menu.Item>
+              </Menu>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer> */}
       </Table>
     </Container>
   );
