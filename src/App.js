@@ -45,36 +45,11 @@ function FFLogsInput(props) {
 }
 
 function PartyTableRow(props) {
-  const pulls = props.fights
-    .map(x => x.fights)
-    .reduce((acc,curr) => [...acc,...curr],[]);
-
-  // const avgPercentage = props.fights
-  //   .map(x => x.fights)
-  //   .reduce((acc,curr) => [...acc,...curr],[])
-  //   .reduce((acc,curr) => acc.concat(parseInt(curr.bossPercentage)/100),[])
-  //   .reduce((acc,curr,idx,src) => {
-  //     if(!isNaN(curr)) {
-  //       return (acc + (curr/src.length));
-  //     }
-  //     else {
-  //       return acc;
-  //     }
-  //   },0).toFixed(2);
-
-    const avgPercentage = props.fights
-      .map(x => x.fights)
-      .reduce((acc,curr) => [...acc,...curr],[])
-      .reduce((acc,curr) => acc.concat(parseInt(curr.bossPercentage)/100),[])
-      .reduce((acc,curr,idx,src) => (!isNaN(curr) ? (acc + (curr/src.length)) : (acc)),0)
-      .toFixed(2);
-
-
   return(
     <Table.Row>
       <Table.Cell>{props.name}</Table.Cell>
-      <Table.Cell>{pulls.length}</Table.Cell>
-      <Table.Cell>{avgPercentage}</Table.Cell>
+      <Table.Cell>{props.fights.length}</Table.Cell>
+      <Table.Cell>{props.percentage}</Table.Cell>
       <Table.Cell><Button>Show Fights <Icon name="angle double down" /></Button></Table.Cell>
     </Table.Row>
   );
@@ -104,14 +79,22 @@ function PartyTable({ reports }) {
       allyobj[friendly.name].job = friendly.type;
     });
     return allyobj;
-  });
-
-  const flatAllies = allies.reduce((merge, entries) =>
-    Object.keys(entries).reduce(
-      (acc, key) => ({ ...acc, [key]: (acc[key] || []).concat(entries[key]) }),
+  }).reduce((merge, entries) =>
+    Object.keys(entries).reduce((acc, key) => ({ ...acc, [key]: (acc[key] || []).concat(entries[key]) }),
       merge
     ),{});
 
+  const collapseInJob = Object.keys(allies)
+    .reduce((acc,cur) => {
+      const real_fights = allies[cur].reduce((combined,fight) => [...combined,...fight.fights.map(x => ({...x, job:fight.job}))],[]);
+      return {...acc, [cur]:real_fights};
+    },{});
+
+  const percentage = Object.keys(collapseInJob).map((x) => {
+    return {name:x,fights:collapseInJob[x],percentage:collapseInJob[x].reduce((acc,cur,idx,src) => acc + ((parseInt(cur.bossPercentage)/100)/src.length),0).toFixed(2)}
+  });
+
+  console.log(percentage);
   return (
     <Container>
       <Table compact celled sortable>
@@ -119,31 +102,18 @@ function PartyTable({ reports }) {
           <Table.Row>
             <Table.HeaderCell>Name/Job</Table.HeaderCell>
             <Table.HeaderCell># Pulls</Table.HeaderCell>
-            <Table.HeaderCell># Kills</Table.HeaderCell>
+            <Table.HeaderCell>Avg. Boss % (0 is a kill)</Table.HeaderCell>
             <Table.HeaderCell>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {Object.keys(flatAllies).map(ally => <PartyTableRow key={ally} name={ally} fights={flatAllies[ally]} />)}
+          {percentage.map(ally =>
+            <PartyTableRow
+              key={ally.name}
+              name={ally.name}
+              fights={ally.fights}
+              percentage={ally.percentage}/>)}
         </Table.Body>
-        {/* <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colspan='4'>
-              <Menu floated='right' pagination>
-                <Menu.Item as='a' icon>
-                  <Icon name='chevron left' />
-                </Menu.Item>
-                <Menu.Item as='a'>1</Menu.Item>
-                <Menu.Item as='a'>2</Menu.Item>
-                <Menu.Item as='a'>3</Menu.Item>
-                <Menu.Item as='a'>4</Menu.Item>
-                <Menu.Item as='a' icon>
-                  <Icon name='chevron right' />
-                </Menu.Item>
-              </Menu>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer> */}
       </Table>
     </Container>
   );
