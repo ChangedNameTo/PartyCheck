@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {Input, Container, Menu, Segment, Table, Button, Icon} from 'semantic-ui-react'
+import {Input, Container, Menu, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
@@ -162,6 +162,7 @@ function PartyTable({ reports }) {
           .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
       ).then(result => {
         const fights = result.flatMap((r) => r.data);
+        console.log(fights);
         setPercentage(calculatePercentage(fights));
       });
     }
@@ -178,54 +179,63 @@ function PartyTable({ reports }) {
 
   const data = direction === 'ascending' ? sortHelper(percentage,column) : sortHelper(percentage,column).reverse();
 
-  if(data.length > 0) {
-    return (
-      <Container>
-        <Table compact celled sortable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                Name/Job
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                sorted={column === 'pulls' ? direction : null}
-                onClick={() => handleSort('pulls')}
-              >
-                # Pulls
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                sorted={column === 'percentage' ? direction : null}
-                onClick={() => handleSort('percentage')}
-              >
-                Avg. Boss % (0 is a kill)
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                Actions
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {data.map(ally =>
-              <PartyTableRow
-                key={ally.name}
-                name={ally.name}
-                pulls={ally.pulls}
-                fights={ally.fights}
-                percentage={ally.percentage}/>)}
-          </Table.Body>
-        </Table>
-      </Container>
-    );
+  const partyTableRow = () => {
+    if(data.length > 0) {
+      return data.map(ally =>
+        <PartyTableRow
+          key={ally.name}
+          name={ally.name}
+          pulls={ally.pulls}
+          fights={ally.fights}
+          percentage={ally.percentage}
+        />)
+    }
+    else {
+      return (
+        <Table.Row>
+          <Table.Cell colSpan='4'>
+            <Segment>
+              <Dimmer active>
+                <Loader />
+              </Dimmer>
+            </Segment>
+          </Table.Cell>
+        </Table.Row>
+      );
+    }
   }
-  else {
-    return (
-      <Container>
-        <Segment>
-          Please enter a valid FFLogs username.
-        </Segment>
-      </Container>
-    );
-  }
+
+  return (
+    <Container>
+      <Table compact celled sortable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>
+              Name/Job
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === 'pulls' ? direction : null}
+              onClick={() => handleSort('pulls')}
+            >
+              # Pulls
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === 'percentage' ? direction : null}
+              onClick={() => handleSort('percentage')}
+            >
+              Avg. Boss % (0 is a kill)
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Actions
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {partyTableRow()}
+        </Table.Body>
+      </Table>
+    </Container>
+  );
 }
 
 class PartyCheck extends React.Component {
@@ -235,6 +245,7 @@ class PartyCheck extends React.Component {
       link: null,
       reports: null,
       fights:null,
+      error:null,
     }
 
     this.checkAndGo = this.checkAndGo.bind(this);
@@ -245,10 +256,11 @@ class PartyCheck extends React.Component {
   }
 
   checkAndGo(i) {
-    if (i.target.value === 'TheAlpacalypse')
+    if (i.target.value)
     {
       this.setState({
         link: i.target.value,
+          error:false,
       });
 
       const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
@@ -261,10 +273,34 @@ class PartyCheck extends React.Component {
           this.setState({
             reports:response,
           });
+        })
+        .catch((error) => {
+          this.setState({
+            reports:null,
+            error:true,
+          });
         });
 
     }
     return;
+  }
+
+  displayTable() {
+    if(!this.state.error) {
+      return (<PartyTable
+        link={this.state.link}
+        reports={this.state.reports}
+      />);
+    }
+    else {
+      return (
+      <Container>
+        <Message warning>
+          <Icon name='error' />
+          You need to enter a valid FFLogs username.
+        </Message>
+      </Container>);
+    }
   }
 
   render() {
@@ -283,10 +319,7 @@ class PartyCheck extends React.Component {
           </Segment>
         </Container>
         <br></br>
-        <PartyTable
-          link={this.state.link}
-          reports={this.state.reports}
-        />
+        {this.displayTable()}
       </div>
     );
   }
