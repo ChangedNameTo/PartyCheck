@@ -1,42 +1,33 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {Input, Container, Menu, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
+import {Input, Container, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
 
 const API_KEY = '57867123b1f24ca0a00384cdb92cc4c7';
 
-function PartyCheckMenu(props) {
-  return (
-    <Menu>
-      <Container>
-        <Menu.Item
-          name='Home'
-          onClick={props.onClick}
-        />
-      </Container>
-    </Menu>
-  );
-}
-
-function Header(props) {
-    return (
-      <PartyCheckMenu
-        onCLick={props.onCLick}
-      />
-    );
-}
-
 function FFLogsInput(props) {
+  const [username, setUsername] = useState('');
+
+  const handleChange = (x) => {if(x !== username) {
+    setUsername(x.value)}};
+
   return (
     <div>
       <Input
         fluid
+        action={{
+          color: 'green',
+          labelPosition: 'left',
+          icon: 'search',
+          content: 'Search',
+          onClick:() => props.onClick(username),
+        }}
+        onChange ={(e,username) => handleChange(username)}
         icon = 'search'
         iconPosition = 'left'
         name = "fflogslink"
         placeholder = 'Enter your FFLogs Username'
-        onChange = {props.onChange}
       />
     </div>
   );
@@ -162,7 +153,6 @@ function PartyTable({ reports }) {
           .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
       ).then(result => {
         const fights = result.flatMap((r) => r.data);
-        console.log(fights);
         setPercentage(calculatePercentage(fights));
       });
     }
@@ -255,17 +245,17 @@ class PartyCheck extends React.Component {
     return;
   }
 
-  checkAndGo(i) {
-    if (i.target.value)
+  checkAndGo(username) {
+    if (username)
     {
       this.setState({
-        link: i.target.value,
+        link: username,
         error:false,
       });
 
       const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
-        username:i.target.value,
-        api_key:API_KEY
+        username:username,
+        api_key:API_KEY,
       });
 
       axios.get(report_query)
@@ -285,17 +275,22 @@ class PartyCheck extends React.Component {
   }
 
   displayTable() {
-    console.log((this.reports));
-    console.log((!this.state.error && this.reports !== undefined));
-    console.log((this.reports === undefined));
-    console.log('===');
-    if(!this.state.error && this.reports) {
+    if(!this.state.error && this.state.reports) {
       return (<PartyTable
         link={this.state.link}
         reports={this.state.reports}
       />);
     }
-    else if (!this.state.error && this.reports === undefined) {
+    else if (this.state.error) {
+      return (
+      <Container>
+        <Message warning>
+          <Icon name='error' />
+          You need to enter a valid FFLogs username.
+        </Message>
+      </Container>);
+    }
+    else {
       return(
         <Container>
           <Message>
@@ -307,28 +302,17 @@ class PartyCheck extends React.Component {
         </Container>
       );
     }
-    else {
-      return (
-      <Container>
-        <Message warning>
-          <Icon name='error' />
-          You need to enter a valid FFLogs username.
-        </Message>
-      </Container>);
-    }
   }
 
   render() {
     return (
       <div>
-        <Header
-          onCLick={this.goHome}
-        />
+        <Container />
         <Container>
           <Segment>
             <div>
               <FFLogsInput
-                onChange = {this.checkAndGo}
+                onClick = {this.checkAndGo}
               />
             </div>
           </Segment>
