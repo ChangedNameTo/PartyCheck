@@ -5,7 +5,8 @@ workflows:
   build:
     jobs:
       - cypress/run:
-          start: npm start
+          start: react-scripts start
+          record: true
           wait-on: 'http://localhost:3000'
           post-steps:
-            - run: npm run deploy
+            - run: 'npm run deploy'
