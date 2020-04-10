@@ -44,7 +44,28 @@ describe('Baseline Functionality Testing', () => {
 
     cy.get('input').type('TheAlpacalypse')
     cy.contains('Search').click();
-    cy.get('table').contains('Show Fights').click();
-    cy.get('tr').contains("Eden's Verse: Fulmination (Savage)")
+  
+    cy.get('table').find('button').first().as('showFightButton');
+
+    cy.get('@showFightButton').click();
+    cy.contains("Eden's Verse: Fulmination (Savage)");
+  })
+
+  it('Should see a full fights table and pull sub-table, then collapse and not see it', () => {
+    // Set up the stub
+    cy.server()
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json')
+    cy.route('GET','/v1/report/fights/*','fixture:report.json')
+
+    cy.get('input').type('TheAlpacalypse')
+    cy.contains('Search').click();
+  
+    cy.get('table').find('button').first().as('showFightButton');
+
+    cy.get('@showFightButton').click();
+    cy.contains("Eden's Verse: Fulmination (Savage)");
+    
+    cy.get('@showFightButton').click();
+    cy.contains("Eden's Verse: Fulmination (Savage)").should('not.exist');
   })
 })

@@ -48,7 +48,9 @@ function PartyTableRow(props) {
           return(
             <Fragment>
               <Table.Row>
-                <Table.Cell>{fight_date}</Table.Cell>
+                <Table.Cell
+                  textAlign="right"
+                >{fight_date}</Table.Cell>
                 <Table.Cell>{x.zoneName}</Table.Cell>
                 <Table.Cell>{(x.bossPercentage / 100)}</Table.Cell>
                 <Table.Cell></Table.Cell>
@@ -59,6 +61,15 @@ function PartyTableRow(props) {
       );
     }
   };
+
+  const showFightsButton = () => {
+    if(!visible) {
+      return <Icon name="angle double down" />
+    }
+    else {
+      return <Icon name="angle double up" />
+    }
+  }
 
   return(
     <Fragment>
@@ -71,7 +82,7 @@ function PartyTableRow(props) {
             key={props.name}
             onClick={() => showFights()}
           >
-            Show Fights <Icon name="angle double down" />
+            Show Fights {showFightsButton()} 
           </Button>
         </Table.Cell>
       </Table.Row>
@@ -143,15 +154,26 @@ const sortHelper = (percentage,column) => [].concat(percentage).sort((a,b) => a[
 function PartyFooter() {
   return(
     <Segment
-      // inverted
+      inverted
       raised
       vertical
-      style={{'position':'absolute','bottom':0,'width':'100%',}}
+      // color='black'
+      style={{
+        'width':'100%',
+        'height':'60px',
+        'background-repeat': 'repeat',
+        'background-attachment': 'scroll',
+        'background-position': '0% 0%',
+        'position':'fixed',
+        'bottom':0,
+      }}
     >
       <Container textAlign='center'>
         <Button 
           color="black" 
+          content='black'
           icon 
+          inverted
           labelPosition='left'
           onClick={() => window.open('https://github.com/ChangedNameTo/PartyCheck','_blank')}
         >
@@ -160,6 +182,7 @@ function PartyFooter() {
         </Button>
         <Button 
           color="blue"
+          inverted
           icon
           labelPosition='left'
           onClick={() => window.open('https://www.linkedin.com/in/will--mitch/','_blank')}
@@ -354,7 +377,6 @@ class PartyCheck extends React.Component {
         <br />
         {this.displayTable()}
         <br />
-        {PartyFooter()}
       </Fragment>
     );
   }
@@ -362,7 +384,10 @@ class PartyCheck extends React.Component {
 
 function App() {
   return (
-    <PartyCheck />
+    <Fragment>
+      <PartyCheck />
+      <PartyFooter />
+    </Fragment>
   );
 }
 
