@@ -5,10 +5,11 @@ orbs:
 
 jobs:
   build-and-test:
-    - checkout
-    - run:
-        name: cypress run
-        command: cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
+    - cypress/run:
+        record: true
+    # - run:
+    #     name: cypress run
+    #     command: cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
 
 workflows:
   version: 1
