@@ -32,6 +32,8 @@ workflows:
             - setup
           start: npm start
           record: true
-          wait-on: 'http://localhost'
+          wait-on: 'http://localhost:3000'
+          no-workspace: true
+          store_artifacts: true
           post-steps:
             - run: 'npm run deploy'
