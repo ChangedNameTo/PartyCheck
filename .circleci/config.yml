@@ -17,7 +17,7 @@ workflows:
       - cypress/run:
           requires:
             - setup
-          start: react-scripts start
+          start: npm start
           record: true
           wait-on: 'http://localhost:3000'
           post-steps:
