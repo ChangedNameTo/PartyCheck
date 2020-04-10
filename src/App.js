@@ -19,14 +19,12 @@ function PartyCheckMenu(props) {
   );
 }
 
-class Header extends React.Component {
-  render() {
+function Header(props) {
     return (
       <PartyCheckMenu
-        onCLick={this.props.onCLick}
+        onCLick={props.onCLick}
       />
     );
-  }
 }
 
 function FFLogsInput(props) {
@@ -91,8 +89,8 @@ function PartyTableRow(props) {
   );
 }
 
-const getAllies = fights =>
-  fights
+const getAllies = fights => {
+  return fights
     .flatMap(fight =>
       fight.friendlies.reduce(
         (acc, friendly) => ({
@@ -118,15 +116,17 @@ const getAllies = fights =>
         ),
       {}
     );
+}
 
-const collapseAlliesInJob = allies =>
-  Object.keys(allies).reduce(
+const collapseAlliesInJob = allies => {
+  return Object.keys(allies).reduce(
     (acc, cur) => ({
       ...acc,
       [cur]: allies[cur].flatMap(f => f.fights.map(x => ({ ...x, job: f.job })))
     }),
     {}
   );
+}
 
 const calculatePercentage = fights => {
   const collapsedInJob = collapseAlliesInJob(getAllies(fights));
