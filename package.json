@@ -1,5 +1,6 @@
 {
   "name": "party-check",
+  "homepage": "http://changednameto.github.io/PartyCheck",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +21,8 @@
     "string-template": "^1.0.0"
   },
   "scripts": {
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -43,6 +46,7 @@
   },
   "devDependencies": {
     "cypress": "^4.3.0",
-    "eslint-plugin-cypress": "^2.10.3"
+    "eslint-plugin-cypress": "^2.10.3",
+    "gh-pages": "^2.2.0"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {Grid, Input, Container, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
+import {Input, Container, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
