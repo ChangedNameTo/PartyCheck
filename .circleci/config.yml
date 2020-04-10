@@ -4,6 +4,16 @@ orbs:
 workflows:
   build:
     jobs:
+      - checkout
+      - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        - v1-dependencies-
+      - run: npm install
+      - save_cahce:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
       - cypress/run:
           start: react-scripts start
           record: true
