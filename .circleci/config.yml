@@ -2,28 +2,11 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
   cypress: cypress-io/cypress@1.16.1
-jobs:
-  build-and-test:
-    docker:
-      - image: circleci/node:12.13
-    steps:
-      - checkout
-      - run:
-        name: update npm
-        command: 'sudo npm i'
-      - save_cache:
-        key: dependency-cache-{{ checksum "package-lock.json" }}
-        paths:
-          - ./node_modules
-      - run:
-        name: build npm
-        command: npm run build
-      - run:
-        name: run tests
-        command: cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
-
 workflows:
   version: 1
-  build-and-test:
-    jobs:
-      - build-and-test
+  build:
+    docker:
+      - image: circleci/node@12.13
+    steps:
+      - checkout
+      - cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
