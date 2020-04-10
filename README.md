@@ -21,6 +21,7 @@ If using yarn
 Leverages Cypress for testing. All features must include an accompanying `.spec` file, or the PR will be rejected.
 
 To run tests:
+
 `npm cypress:open`
 
 ## Contributing
@@ -28,14 +29,14 @@ Right now this is my personal project to learn react. That's not to say that I w
 
 ## Todo
 
-[] Filter out Limit Breaks, Pets, "Multiple Players", etc
-[] Create a search bar to limit results down to a couple people
-[] Create a filter for certain fights/jobs
-[] Create a "Party" side table that uses a button on the row to "Build" a party out of the people you're doing content with.
-[] Leverage cookies so you can save your username
-[] Leverage cookies so you can save your character name
-[] Leverage cookies so you can save tags/notes about players
-[] Create an export system to allow tags/notes to be shared amongst people
+- [] Filter out Limit Breaks, Pets, "Multiple Players", etc
+- [] Create a search bar to limit results down to a couple people
+- [] Create a filter for certain fights/jobs
+- [] Create a "Party" side table that uses a button on the row to "Build" a party out of the people you're doing content with.
+- [] Leverage cookies so you can save your username
+- [] Leverage cookies so you can save your character name
+- [] Leverage cookies so you can save tags/notes about players
+- [] Create an export system to allow tags/notes to be shared amongst people
 
 ## License
 
