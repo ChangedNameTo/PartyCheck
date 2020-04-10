@@ -180,7 +180,7 @@ function PartyTable({ reports }) {
   const data = direction === 'ascending' ? sortHelper(percentage,column) : sortHelper(percentage,column).reverse();
 
   const partyTableRow = () => {
-    if(data.length > 0) {
+    if(data.length > 0 && !(reports === null)) {
       return data.map(ally =>
         <PartyTableRow
           key={ally.name}
@@ -190,7 +190,7 @@ function PartyTable({ reports }) {
           percentage={ally.percentage}
         />)
     }
-    else {
+    else if (!(reports === null)){
       return (
         <Table.Row>
           <Table.Cell colSpan='4'>
@@ -260,7 +260,7 @@ class PartyCheck extends React.Component {
     {
       this.setState({
         link: i.target.value,
-          error:false,
+        error:false,
       });
 
       const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
@@ -280,17 +280,32 @@ class PartyCheck extends React.Component {
             error:true,
           });
         });
-
     }
     return;
   }
 
   displayTable() {
-    if(!this.state.error) {
+    console.log((this.reports));
+    console.log((!this.state.error && this.reports !== undefined));
+    console.log((this.reports === undefined));
+    console.log('===');
+    if(!this.state.error && this.reports) {
       return (<PartyTable
         link={this.state.link}
         reports={this.state.reports}
       />);
+    }
+    else if (!this.state.error && this.reports === undefined) {
+      return(
+        <Container>
+          <Message>
+            <Message.Header>Welcome to PartyCheck!</Message.Header>
+            <p>
+              Please enter a valid FFLogs username.
+            </p>
+          </Message>
+        </Container>
+      );
     }
     else {
       return (
