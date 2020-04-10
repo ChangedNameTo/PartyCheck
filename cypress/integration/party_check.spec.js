@@ -9,6 +9,11 @@ describe('Baseline Functionality Testing', () => {
   });
 
   it('Should type `TheAlpacalypse` into the search and see the results table', () => {
+    // Set up the stub
+    cy.server()
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json')
+    cy.route('GET','/v1/report/fights/*','fixture:report.json')
+
     cy.get('input').type('TheAlpacalypse')
     cy.contains('Search').click();
     cy.get('table')
@@ -20,5 +25,26 @@ describe('Baseline Functionality Testing', () => {
     cy.contains('You need to enter a valid FFLogs username.')
   })
 
-  // it('Should get a valid JSON response and then show Fights')
+  it('Should get a valid JSON response and then find the Show Fights button', () => {
+    // Set up the stub
+    cy.server()
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json')
+    cy.route('GET','/v1/report/fights/*','fixture:report.json')
+
+    cy.get('input').type('TheAlpacalypse')
+    cy.contains('Search').click();
+    cy.get('table').contains('Show Fights')
+  })
+  
+  it('Should see a full fights table, and click show fights and see results', () => {
+    // Set up the stub
+    cy.server()
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json')
+    cy.route('GET','/v1/report/fights/*','fixture:report.json')
+
+    cy.get('input').type('TheAlpacalypse')
+    cy.contains('Search').click();
+    cy.get('table').contains('Show Fights').click();
+    cy.get('tr').contains("Eden's Verse: Fulmination (Savage)")
+  })
 })
