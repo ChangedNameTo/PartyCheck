@@ -276,10 +276,12 @@ class PartyCheck extends React.Component {
 
   displayTable() {
     if(!this.state.error && this.state.reports) {
-      return (<PartyTable
-        link={this.state.link}
-        reports={this.state.reports}
-      />);
+      return (
+        <PartyTable
+          link={this.state.link}
+          reports={this.state.reports}
+        />
+      );
     }
     else if (this.state.error) {
       return (
