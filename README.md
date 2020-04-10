@@ -25,7 +25,7 @@ To run tests:
 `npm cypress:open`
 
 ## Contributing
-Right now this is my personal project to learn react. That's not to say that I will reject pull requests, but rather I will prioritize things as I see fit and work on them when I can.
+Right now this is my personal project to learn react. That's not to say that I will reject pull requests, but rather I will prioritize things as I see fit and work on them when I can. If there's something I would rather do myself because I find it interesting, I will do so.
 
 ## Todo
 
