@@ -2,12 +2,16 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
   cypress: cypress-io/cypress@1.16.1
+
+jobs:
+  build-and-test:
+    - checkout
+    - cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
+
 workflows:
   version: 1
   build:
     docker:
       - image: circleci/node@12.13
     jobs:
-      # Blah
-      - checkout
-      - cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430
+      - build-and-test
