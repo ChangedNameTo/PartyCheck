@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {Input, Container, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
+import {Grid, Input, Container, Segment, Table, Button, Icon, Message, Dimmer, Loader} from 'semantic-ui-react'
 var format = require('string-template');
 const axios = require('axios').default;
 require('dotenv').config();
@@ -139,6 +139,38 @@ const calculatePercentage = fights => {
 };
 
 const sortHelper = (percentage,column) => [].concat(percentage).sort((a,b) => a[column] - b[column])
+
+function PartyFooter() {
+  return(
+    <Segment
+      // inverted
+      raised
+      vertical
+      style={{'position':'absolute','bottom':0,'width':'100%',}}
+    >
+      <Container textAlign='center'>
+        <Button 
+          color="black" 
+          icon 
+          labelPosition='left'
+          onClick={() => window.open('https://github.com/ChangedNameTo/PartyCheck','_blank')}
+        >
+          <Icon name='github' />
+          View on Github
+        </Button>
+        <Button 
+          color="blue"
+          icon
+          labelPosition='left'
+          onClick={() => window.open('https://www.linkedin.com/in/will--mitch/','_blank')}
+        >
+          <Icon name='linkedin' />
+          Find me on LinkedIn
+        </Button>
+      </Container>
+    </Segment>
+  );
+}
 
 function PartyTable({ reports }) {
   const [percentage, setPercentage] = useState([]);
@@ -308,8 +340,8 @@ class PartyCheck extends React.Component {
 
   render() {
     return (
-      <div>
-        <Container />
+      <Fragment>
+        <br />
         <Container>
           <Segment>
             <div>
@@ -319,9 +351,11 @@ class PartyCheck extends React.Component {
             </div>
           </Segment>
         </Container>
-        <br></br>
+        <br />
         {this.displayTable()}
-      </div>
+        <br />
+        {PartyFooter()}
+      </Fragment>
     );
   }
 }
