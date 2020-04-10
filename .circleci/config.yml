@@ -3,6 +3,8 @@ orbs:
   cypress: cypress-io/cypress@1
 jobs:
   setup:
+    docker:
+      - image: circleci/node:12.13
     steps:
       - checkout
       - restore_cache:
@@ -18,6 +20,7 @@ jobs:
 workflows:
   build:
     jobs:
+      - setup
       - cypress/run:
           start: react-scripts start
           record: true
