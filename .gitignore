@@ -22,4 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Don't want these tracked
 /cypress/integration/examples
+/cypress/screenshots
+/cypress/videos
