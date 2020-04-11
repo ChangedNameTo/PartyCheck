@@ -8,6 +8,7 @@ describe('PartyTable functionality testing', () => {
     cy.get('input').type('TheAlpacalypse');
     cy.contains('Search').click();
     cy.get('.descending').click();
-    cy.get('table thead > tr > th').contains('.ascending')
+    cy.get('.ascending').click();
+    cy.get('.descending');
   })
 })
