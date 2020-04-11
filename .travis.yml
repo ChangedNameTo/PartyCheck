@@ -18,7 +18,7 @@ install:
   - npm install -g codecov
 script:
   - npm start &
-  - $(npm bin)/cypress run --record
+  - npm coverage
 deploy:
   provider: pages
   skip_cleanup: true
