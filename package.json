@@ -21,14 +21,16 @@
     "string-template": "^1.0.0"
   },
   "scripts": {
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build",
-    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "coverage": "nyc npm run cypress:run & nyc report --reporter=text-lcov | coveralls",
+    "coverage:instrument": "npx nyc instrument src instrumented",
     "cypress:open": "cypress open",
-    "cypress:run":"cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430"
+    "cypress:run": "cypress run",
+    "cypress:run:record": "cypress run --record --key ed0df24f-8471-4f0f-8012-e26d33bc0430"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,8 +48,13 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.1.0",
+    "@cypress/instrument-cra": "^1.1.0",
+    "coveralls": "^3.0.11",
     "cypress": "^4.3.0",
     "eslint-plugin-cypress": "^2.10.3",
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "nyc": "^15.0.1",
+    "start-server-and-test": "^1.10.11"
   }
 }

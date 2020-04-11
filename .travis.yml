@@ -15,6 +15,7 @@ cache:
     - ~/.cache
 install:
   - npm ci
+  - npm install -g codecov
 script:
   - npm start &
   - $(npm bin)/cypress run --record
