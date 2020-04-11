@@ -25,7 +25,7 @@ function PartyFooter() {
           icon
           inverted
           labelPosition='left'
-          onClick={() => window.open('https://github.com/ChangedNameTo/PartyCheck','_blank')}
+          href='https://github.com/ChangedNameTo/PartyCheck'
         >
           <Icon name='github' />
           View on Github
@@ -35,7 +35,7 @@ function PartyFooter() {
           inverted
           icon
           labelPosition='left'
-          onClick={() => window.open('https://www.linkedin.com/in/will--mitch/','_blank')}
+          href='https://www.linkedin.com/in/will--mitch/'
         >
           <Icon name='linkedin' />
           Find me on LinkedIn
