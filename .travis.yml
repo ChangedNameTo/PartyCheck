@@ -16,5 +16,5 @@ cache:
 install:
   - npm ci
 script:
-  - npm start
+  - npm start &
   - $(npm bin)/cypress run --record
