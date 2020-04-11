@@ -2,6 +2,8 @@
     "all":true,
     "exclude":[
         "**/src/serviceWorker.js",
-        "**/cypress/*.js"
+        "**/cypress/*",
+        "**/build/*",
+        "**/coverage/*"
     ]
 }
