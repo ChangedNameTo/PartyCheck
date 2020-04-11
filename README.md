@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ChangedNameTo/PartyCheck.svg?branch=master)](https://travis-ci.com/ChangedNameTo/PartyCheck) [![Coverage Status](https://coveralls.io/repos/github/ChangedNameTo/PartyCheck/badge.svg?branch=master)](https://coveralls.io/github/ChangedNameTo/PartyCheck?branch=master)
+
 # Welcome to PartyCheck
 
 After being stuck on e5s for close to 150 pulls, I started to see the same people in many of my parties. I wanted to create an easy way to evauluate if I'd played with someone before. This scans your FFLogs username and pulls every person you've played with in Savage/EX content. It's still heavily under development, and is my first stab at react so can be buggy.

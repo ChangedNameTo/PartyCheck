@@ -26,3 +26,7 @@ yarn-error.log*
 /cypress/integration/examples
 /cypress/screenshots
 /cypress/videos
+
+coverage
+.nyc_output
+/instrumented
