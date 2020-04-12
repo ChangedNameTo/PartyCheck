@@ -20,6 +20,7 @@ script:
   - npm start &
   - npm run coverage:instrument
   - npm run coverage
+  - nom run coverage:report
 deploy:
   provider: pages
   skip_cleanup: true
