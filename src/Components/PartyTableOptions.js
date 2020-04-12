@@ -5,12 +5,22 @@ function PartyTableOptions(props) {
   console.log(props)
   const options = [
     {
-      key:'edensversesavage', text:"Eden's Verse: Fulmination (Savage)", value:'edensversesavage'
+      key:'edensversesavage',
+      text:"Eden's Verse: Fulmination (Savage)", value:'edensversesavage'
     }
   ]
 
+  const jobsChangeOptions = (jobs) => {
+    if(jobs !== props.options.jobs) {
+      props.setOptions({
+        fights:props.options.fights,
+        jobs:jobs,
+        kills:props.options.kills
+      })
+    }
+  }
+
   const fightsChangeOptions = (fights) => {
-    console.log(props.options)
     if(fights !== props.options.fights) {
       props.setOptions({
         fights:fights,
@@ -19,9 +29,8 @@ function PartyTableOptions(props) {
       })
     }
   }
-  
+
   const killsChangeOptions = (kills) => {
-    console.log(props.options)
     if(kills !== props.options.kills) {
       props.setOptions({
         fights:props.options.fights,
@@ -53,7 +62,7 @@ function PartyTableOptions(props) {
                   multiple
                   selection
                   search
-                  onClose={(fights) => fightsChangeOptions(fights)}
+                  onChange={(e,fights) => fightsChangeOptions(fights)}
                   options={options}
                 >
 
@@ -79,6 +88,7 @@ function PartyTableOptions(props) {
                   multiple
                   search
                   selection
+                  onChange={(e,jobs) => jobsChangeOptions(jobs)}
                   options={options}/>
               </Segment>
             </Segment.Group>
