@@ -1,6 +1,6 @@
 import React, { useState,useEffect,Fragment } from 'react';
 
-import {Grid,Container,Segment,Icon,Message } from 'semantic-ui-react'
+import {Grid,Container,Segment,Message } from 'semantic-ui-react'
 
 import PartyTable from './PartyTable'
 import FFLogsInput from './FFLogsInput'
@@ -17,18 +17,17 @@ function PartyCheck() {
 
   useEffect(() => {
     if(username) {
-      console.log(username)
-      Promise.all(
-        axios
-          .get(`https://www.fflogs.com/v1/reports/user/${username}?api_key=${API_KEY}`)
-      ).then(reports => {
-        setReports(reports)
-      }).catch((error) => {
-        setReports(null);
-        setError(true);
-      })
+      axios
+        .get(`https://www.fflogs.com/v1/reports/user/${username}?api_key=${API_KEY}`)
+        .then(reports => {
+          setReports(reports)
+        }).catch((error) => {
+          console.log(error);
+          setReports(null);
+          setError(true);
+        })
     }
-  })
+  },[username])
 
   const displayTable = () => {
     if(!error && reports) {
@@ -43,7 +42,6 @@ function PartyCheck() {
       return (
       <Container>
         <Message error>
-          <Icon name='error' />
           You need to enter a valid FFLogs username.
         </Message>
       </Container>);
@@ -91,7 +89,7 @@ function PartyCheck() {
         </Segment>
       </Container>
       <br />
-      {displayTable}
+      {displayTable()}
       <br />
     </Fragment>
   );
