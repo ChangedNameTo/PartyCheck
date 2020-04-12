@@ -15,6 +15,7 @@ function PartyCheck() {
   const [reports,setReports] = useState(null);
   const [error,setError] = useState(false);
   const [visible,setVisible] = useState(false);
+  const [options,setOptions] = useState({fights:[],jobs:[],kills:1})
 
   useEffect(() => {
     if(username) {
@@ -95,6 +96,8 @@ function PartyCheck() {
                 <PartyTableOptions
                   visible={visible}
                   reports={reports}
+                  options={options}
+                  setOptions={() => setOptions()}
                 />
               </Grid.Column>
             </Grid.Row>

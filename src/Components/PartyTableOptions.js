@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState,useEffect, Fragment} from 'react';
 import {Dropdown,Segment,Header, Button, Grid} from 'semantic-ui-react';
 
 function PartyTableOptions(props) {
@@ -7,6 +7,13 @@ function PartyTableOptions(props) {
       key:'edensversesavage', text:"Eden's Verse: Fulmination (Savage)", value:'edensversesavage'
     }
   ]
+
+  const fightsChangeOptions = (fights) => {
+    console.log(props.options)
+    if(fights !== props.options.fights) {
+      props.setOptions({fights:fights,jobs:props.options.jobs,kills:props.options.kills})
+    }
+  }
 
   if(props.visible){
     return (
@@ -29,6 +36,8 @@ function PartyTableOptions(props) {
                   fluid
                   multiple
                   selection
+                  search
+                  onClose={(fights) => fightsChangeOptions(fights)}
                   options={options}
                 >
 
@@ -52,6 +61,7 @@ function PartyTableOptions(props) {
                   placeholder='Fight Names'
                   fluid
                   multiple
+                  search
                   selection
                   options={options}/>
               </Segment>
