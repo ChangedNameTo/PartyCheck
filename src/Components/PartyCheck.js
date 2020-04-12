@@ -1,71 +1,45 @@
-import React, { Fragment } from 'react';
+import React, { useState,useEffect,Fragment } from 'react';
 
-import { Container, Segment, Icon, Message } from 'semantic-ui-react'
+import {Grid,Container,Segment,Icon,Message } from 'semantic-ui-react'
 
 import PartyTable from './PartyTable'
 import FFLogsInput from './FFLogsInput'
+import PartyTableFilters from './PartyTableFilters';
 
 const axios = require('axios').default;
 const API_KEY = '57867123b1f24ca0a00384cdb92cc4c7';
 
-var format = require('string-template');
+function PartyCheck() {
+  const [username,setUsername] = useState(null);
+  const [reports,setReports] = useState(null);
+  const [error,setError] = useState(false);
+  const [visible,setVisible] = useState(false);
 
-class PartyCheck extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      link: null,
-      reports: null,
-      fights:null,
-      error:null,
+  useEffect(() => {
+    if(username) {
+      console.log(username)
+      Promise.all(
+        axios
+          .get(`https://www.fflogs.com/v1/reports/user/${username}?api_key=${API_KEY}`)
+      ).then(reports => {
+        setReports(reports)
+      }).catch((error) => {
+        setReports(null);
+        setError(true);
+      })
     }
+  })
 
-    this.checkAndGo = this.checkAndGo.bind(this);
-  }
-
-  goHome(i) {
-    return;
-  }
-
-  checkAndGo(username) {
-    if (username)
-    {
-      this.setState({
-        link: username,
-        error:false,
-      });
-
-      const report_query = format("https://www.fflogs.com/v1/reports/user/{username}?api_key={api_key}", {
-        username:username,
-        api_key:API_KEY,
-      });
-
-      axios.get(report_query)
-        .then((response) => {
-          this.setState({
-            reports:response,
-          });
-        })
-        .catch((error) => {
-          this.setState({
-            reports:null,
-            error:true,
-          });
-        });
-    }
-    return;
-  }
-
-  displayTable() {
-    if(!this.state.error && this.state.reports) {
+  const displayTable = () => {
+    if(!error && reports) {
       return (
         <PartyTable
-          link={this.state.link}
-          reports={this.state.reports}
+          username={username}
+          reports={reports}
         />
       );
     }
-    else if (this.state.error) {
+    else if (error) {
       return (
       <Container>
         <Message error>
@@ -88,25 +62,39 @@ class PartyCheck extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <Fragment>
-        <br />
-        <Container>
-          <Segment>
-            <div>
-              <FFLogsInput
-                onClick = {this.checkAndGo}
-              />
-            </div>
-          </Segment>
-        </Container>
-        <br />
-        {this.displayTable()}
-        <br />
-      </Fragment>
-    );
+  const showOptions = () => {
+    return setVisible(!visible);
   }
+
+  return (
+    <Fragment>
+      <br />
+      <Container>
+        <Segment>
+          <Grid>
+            <Grid.Column
+              width={13}
+            >
+              <FFLogsInput
+                onClick = {(i) => setUsername(i)}
+              />
+            </Grid.Column>
+            <Grid.Column
+              width={3}
+            >
+              <PartyTableFilters
+                visible={visible}
+                onClick={() => showOptions}
+              />
+            </Grid.Column>
+          </Grid>
+        </Segment>
+      </Container>
+      <br />
+      {displayTable}
+      <br />
+    </Fragment>
+  );
 }
 
 export default PartyCheck;
