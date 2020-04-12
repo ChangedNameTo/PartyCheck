@@ -2,6 +2,7 @@ import React, {useState,useEffect, Fragment} from 'react';
 import {Dropdown,Segment,Header, Button, Grid} from 'semantic-ui-react';
 
 function PartyTableOptions(props) {
+  console.log(props)
   const options = [
     {
       key:'edensversesavage', text:"Eden's Verse: Fulmination (Savage)", value:'edensversesavage'
@@ -11,7 +12,22 @@ function PartyTableOptions(props) {
   const fightsChangeOptions = (fights) => {
     console.log(props.options)
     if(fights !== props.options.fights) {
-      props.setOptions({fights:fights,jobs:props.options.jobs,kills:props.options.kills})
+      props.setOptions({
+        fights:fights,
+        jobs:props.options.jobs,
+        kills:props.options.kills
+      })
+    }
+  }
+  
+  const killsChangeOptions = (kills) => {
+    console.log(props.options)
+    if(kills !== props.options.kills) {
+      props.setOptions({
+        fights:props.options.fights,
+        jobs:props.options.jobs,
+        kills:kills
+      })
     }
   }
 
@@ -80,11 +96,26 @@ function PartyTableOptions(props) {
               </Segment>
               <Segment>
                 <Button.Group>
-                  <Button color='green'>Kills</Button>
+                  <Button
+                    color={props.options.kills === 0 ? 'green' : 'standard'}
+                    onClick={() => killsChangeOptions(0)}
+                  >
+                    Kills
+                  </Button>
                   <Button.Or />
-                  <Button color='yellow'>All</Button>
+                  <Button
+                    color={props.options.kills === 1 ? 'yellow' : 'standard'}
+                    onClick={() => killsChangeOptions(1)}
+                  >
+                    All
+                  </Button>
                   <Button.Or />
-                  <Button color='red'>Wipes</Button>
+                  <Button
+                    color={props.options.kills === 2 ? 'red' : 'standard'}
+                    onClick={() => killsChangeOptions(2)}
+                  >
+                    Wipes
+                  </Button>
                 </Button.Group>
               </Segment>
             </Segment.Group>

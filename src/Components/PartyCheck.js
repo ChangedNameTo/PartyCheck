@@ -97,7 +97,7 @@ function PartyCheck() {
                   visible={visible}
                   reports={reports}
                   options={options}
-                  setOptions={() => setOptions()}
+                  setOptions={(newOptions) => setOptions(newOptions)}
                 />
               </Grid.Column>
             </Grid.Row>
