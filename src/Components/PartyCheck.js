@@ -5,6 +5,7 @@ import {Grid,Container,Segment,Message } from 'semantic-ui-react'
 import PartyTable from './PartyTable'
 import FFLogsInput from './FFLogsInput'
 import PartyTableFilters from './PartyTableFilters';
+import PartyTableOptions from './PartyTableOptions';
 
 const axios = require('axios').default;
 const API_KEY = '57867123b1f24ca0a00384cdb92cc4c7';
@@ -70,21 +71,33 @@ function PartyCheck() {
       <Container>
         <Segment>
           <Grid>
-            <Grid.Column
-              width={13}
-            >
-              <FFLogsInput
-                onClick = {(i) => setUsername(i)}
-              />
-            </Grid.Column>
-            <Grid.Column
-              width={3}
-            >
-              <PartyTableFilters
-                visible={visible}
-                onClick={() => showOptions}
-              />
-            </Grid.Column>
+            <Grid.Row>
+              <Grid.Column
+                width={13}
+              >
+                <FFLogsInput
+                  onClick = {(i) => setUsername(i)}
+                />
+              </Grid.Column>
+              <Grid.Column
+                width={3}
+              >
+                <PartyTableFilters
+                  visible={visible}
+                  onClick={() => showOptions()}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column 
+                centered="true"
+              >
+                <PartyTableOptions
+                  visible={visible}
+                  reports={reports}
+                />
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
         </Segment>
       </Container>
