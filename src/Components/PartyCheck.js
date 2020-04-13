@@ -38,6 +38,8 @@ function PartyCheck() {
 
   // Processes the reports output into useful information for the rows and filters
   useEffect(() => {
+    if(!fights) return;
+
     const collapseAlliesInJob = allies => {
       return Object.keys(allies).reduce(
         (acc, cur) => ({
@@ -98,6 +100,7 @@ function PartyCheck() {
         const jobChoiceOption = jobChoiceNames.map((job) => {
           return {key:job,text:job,value:job}
         })
+
         setJobChoices(jobChoiceOption)
 
         let newAllies = {}
@@ -126,11 +129,66 @@ function PartyCheck() {
       }
     }
 
+    const pullFights = fightArray => {
+      return fightArray
+        .reduce((acc,curr) => {
+          return [...acc,...curr.fights.map((y) => y.zoneName)]
+        },[])
+    }
+
+    const filterFights = allies => {
+      if(!Array.isArray(allies)) {
+        const fightChoiceNames = Object.keys(allies)
+          .reduce((acc,key) => {
+            return [...acc,...pullFights(allies[key])]
+          },[])
+          .filter((fight,ind,arr) => {
+            return (arr.indexOf(fight) === ind)
+          })
+          .filter((fight,ind,arr) => {
+            return (fight.includes("(Savage)") || fight.includes("(Extreme)"));
+          })
+
+        const fightChoiceOptions = fightChoiceNames.map((job) => {
+          return {key:job,text:job,value:job}
+        })
+
+        setFightChoices(fightChoiceOptions)
+
+        let newAllies = {}
+
+        Object.keys(allies).filter((ally) => {
+          let allyFightFiltered = allies[ally].filter((fights) => {
+            // Are options set? Filter. If not, return fights
+            if((options.fights.value) && (options.fights.value.length > 0)) {
+              const filteredFight =  {fights:fights.fights.filter((x) => options.fights.value.indexOf(x.zoneName) !== -1),job:fights.job}
+
+              if(filteredFight.fights.length > 0) {
+                return filteredFight
+              }
+            }
+            else{
+              return fights
+            }
+          })
+
+          if(allyFightFiltered.length > 0) {
+            newAllies[ally] = allyFightFiltered
+          }
+        })
+
+        return newAllies
+      }
+      else {
+        return allies
+      }
+    }
+
     const generateFilters = allies => {
       const alliesFilteredJobs = filterJobs(allies);
-      // Fight Names
+      const alliesFilteredFights = filterFights(alliesFilteredJobs);
 
-      return alliesFilteredJobs;
+      return alliesFilteredFights;
     }
 
     const calculatePercentage = fights => {
