@@ -13,6 +13,7 @@ const API_KEY = '57867123b1f24ca0a00384cdb92cc4c7';
 function PartyCheck() {
   const [username,setUsername] = useState(null);
   const [reports,setReports] = useState(null);
+  const [fights,setFights] = useState(null);
   const [error,setError] = useState(false);
   const [visible,setVisible] = useState(false);
   const [options,setOptions] = useState({fights:[],jobs:[],kills:1})
@@ -99,11 +100,9 @@ function PartyCheck() {
         })
         setJobChoices(jobChoiceOption)
 
-        // Filters based on job names
-        console.log(allies)
-
         let newAllies = {}
-        const filteredOutJobs =  Object.keys(allies).filter((ally) => {
+
+        Object.keys(allies).filter((ally) => {
           let allyFightFiltered = allies[ally].filter((fights) => {
             // Are options set? Filter. If not, return fights
             if((options.jobs.value) && (options.jobs.value.length > 0)) {
@@ -155,7 +154,12 @@ function PartyCheck() {
         };
       });
     };
+    
+    const calPercentage = calculatePercentage(fights)
+    // setPercentage(calPercentage);
+  },[fights,setPercentage,options])
 
+  useEffect(() => {
     if (reports && reports.data) {
       Promise.all(
         reports.data
@@ -163,13 +167,10 @@ function PartyCheck() {
           .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
       ).then(result => {
         const fights = result.flatMap((r) => r.data);
-        const calPercentage = calculatePercentage(fights)
-        // setPercentage(calPercentage);
+        setFights(fights)
       });
-
-
     }
-  },[reports,setPercentage,options])
+  },[reports])
 
   
 
