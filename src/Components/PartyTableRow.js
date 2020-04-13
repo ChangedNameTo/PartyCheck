@@ -14,16 +14,14 @@ function PartyTableRow(props) {
         props.fights.map((x,i) => {
           const fight_date = new Date(x.realtime).toDateString();
           return(
-            <Fragment>
-              <Table.Row>
-                {/* <Table.Cell
-                  textAlign="right"
-                >{fight_date}</Table.Cell>
-                <Table.Cell>{x.zoneName}</Table.Cell>
-                <Table.Cell>{(x.bossPercentage / 100)}</Table.Cell>
-                <Table.Cell></Table.Cell> */}
-              </Table.Row>
-            </Fragment>
+            <Table.Row>
+              <Table.Cell
+                textAlign="right"
+              >{fight_date}</Table.Cell>
+              <Table.Cell>{x.zoneName}</Table.Cell>
+              <Table.Cell>{(x.bossPercentage / 100)}</Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
           );
         })
       );
@@ -42,7 +40,7 @@ function PartyTableRow(props) {
   return(
     <Fragment>
       <Table.Row>
-        {/* <Table.Cell>{props.name}</Table.Cell>
+        <Table.Cell>{props.name}</Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
         <Table.Cell>{props.percentage}</Table.Cell>
         <Table.Cell>
@@ -52,7 +50,7 @@ function PartyTableRow(props) {
           >
             Show Fights {showFightsButton()} 
           </Button>
-        </Table.Cell> */}
+        </Table.Cell>
       </Table.Row>
       {subRows()}
     </Fragment>

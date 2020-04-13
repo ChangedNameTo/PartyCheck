@@ -16,22 +16,22 @@ function PartyTable(props) {
     }
   }
 
-  const sortHelper = (percentage,column) => [].concat(percentage).sort((a,b) => a[column] - b[column])
+  const sortHelper = (percentage,column) => [].concat(props.allies).sort((a,b) => a[column] - b[column])
 
-  const data = direction === 'ascending' ? sortHelper(props.percentage,column) : sortHelper(props.percentage,column).reverse();
+  const data = direction === 'ascending' ? sortHelper(props.allies,column) : sortHelper(props.percentage,column).reverse();
 
   const partyTableRow = () => {
-    if(data.length > 0 && !(props.reports === null)) {
+    if(data.length > 0 && !(props.allies === null)) {
       return data.map(ally =>
         <PartyTableRow
-          // key={ally.name}
-          // name={ally.name}
-          // pulls={ally.pulls}
-          // fights={ally.fights}
-          // percentage={ally.percentage}
+          key={ally.name}
+          name={ally.name}
+          pulls={ally.pulls}
+          fights={ally.fights}
+          percentage={ally.percentage}
         />)
     }
-    else if (!(props.reports === null)){
+    else if (!(props.allies === null)){
       return (
         <Table.Row>
           <Table.Cell colSpan='4'>

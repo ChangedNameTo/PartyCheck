@@ -120,6 +120,8 @@ function PartyCheck() {
           if(allyFightFiltered.length > 0) {
             newAllies[ally] = allyFightFiltered
           }
+
+          return null;
         })
         
         return newAllies
@@ -222,6 +224,7 @@ function PartyCheck() {
     }
 
     const generateFilters = allies => {
+      // These aren't actually players but are reported as such in the API. Filtered here.
       delete allies['Limit Break']
       delete allies['Multiple Players']
       delete allies['Ground Effect']
@@ -229,9 +232,6 @@ function PartyCheck() {
       const alliesFilteredJobs = filterJobs(allies);
       const alliesFilteredFights = filterFights(alliesFilteredJobs);
       const alliesFilteredKills = filterKills(alliesFilteredFights);
-
-      console.log(alliesFilteredKills);
-
 
       return alliesFilteredKills;
     }
@@ -259,7 +259,7 @@ function PartyCheck() {
     };
     
     const calPercentage = calculatePercentage(fights)
-    // setPercentage(calPercentage);
+    setPercentage(calPercentage);
   },[fights,setPercentage,options])
 
   useEffect(() => {
@@ -275,15 +275,11 @@ function PartyCheck() {
     }
   },[reports])
 
-  
-
-
   const displayTable = () => {
-    if(!error && reports) {
+    if(!error && fights) {
       return (
         <PartyTable
-          username={username}
-          reports={reports}
+          allies={percentage}
         />
       );
     }
