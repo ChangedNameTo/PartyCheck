@@ -106,7 +106,7 @@ function PartyCheck() {
         let newAllies = {}
 
         Object.keys(allies).filter((ally) => {
-          let allyFightFiltered = allies[ally].filter((fights) => {
+          let allyFightFiltered = allies[ally].filter((fights) => { // eslint-disable-line
             // Are options set? Filter. If not, return fights
             if((options.jobs.value) && (options.jobs.value.length > 0)) {
               if((options.jobs.value.indexOf(fights.job) !== -1)){
@@ -140,7 +140,7 @@ function PartyCheck() {
 
     const filterFights = allies => {
       if(!Array.isArray(allies)) {
-        const fightChoiceNames = Object.keys(allies)
+        const fightChoiceNames = Object.keys(allies) 
           .reduce((acc,key) => {
             return [...acc,...pullFights(allies[key])]
           },[])
@@ -159,8 +159,8 @@ function PartyCheck() {
 
         let newAllies = {}
 
-        Object.keys(allies).filter((ally) => {
-          let allyFightFiltered = allies[ally].filter((fights) => {
+        Object.keys(allies).filter((ally) => { // eslint-disable-line
+          let allyFightFiltered = allies[ally].filter((fights) => { // eslint-disable-line
             // Are options set? Filter. If not, return fights
             if((options.fights.value) && (options.fights.value.length > 0)) {
               const filteredFight =  {fights:fights.fights.filter((x) => options.fights.value.indexOf(x.zoneName) !== -1),job:fights.job}
@@ -190,8 +190,8 @@ function PartyCheck() {
       if(!Array.isArray(allies)) {
         let newAllies = {}
 
-        Object.keys(allies).filter((ally) => {
-          let allyKillFiltered = allies[ally].filter((fights) => {
+        Object.keys(allies).filter((ally) => { // eslint-disable-line
+          let allyKillFiltered = allies[ally].filter((fights) => { // eslint-disable-line
             if(options.kills === 0) {
               const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage === 0),job:fights.job}
 

@@ -39,7 +39,7 @@ function PartyTableOptions(props) {
           <Grid.Column
             width={5}
           >
-            <Segment.Group vertical >
+            <Segment.Group vertical="true" >
               <Segment>
                 <Header
                   as='h4'
@@ -65,7 +65,7 @@ function PartyTableOptions(props) {
           <Grid.Column
             width={6}
           >
-            <Segment.Group vertical>
+            <Segment.Group vertical="true">
               <Segment>
                 <Header
                   as='h4'
@@ -88,7 +88,7 @@ function PartyTableOptions(props) {
           <Grid.Column
             width={5}
           >
-            <Segment.Group vertical>
+            <Segment.Group vertical="true">
               <Segment>
                 <Header
                   as='h4'
