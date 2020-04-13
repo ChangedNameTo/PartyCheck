@@ -1,15 +1,7 @@
-import React, {useState,useEffect, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {Dropdown,Segment,Header, Button, Grid} from 'semantic-ui-react';
 
 function PartyTableOptions(props) {
-  console.log(props)
-  const options = [
-    {
-      key:'edensversesavage',
-      text:"Eden's Verse: Fulmination (Savage)", value:'edensversesavage'
-    }
-  ]
-
   const jobsChangeOptions = (jobs) => {
     if(jobs !== props.options.jobs) {
       props.setOptions({
@@ -63,7 +55,7 @@ function PartyTableOptions(props) {
                   selection
                   search
                   onChange={(e,fights) => fightsChangeOptions(fights)}
-                  options={options}
+                  options={props.fightChoices}
                 >
 
                 </Dropdown>
@@ -83,13 +75,13 @@ function PartyTableOptions(props) {
               </Segment>
               <Segment>
                 <Dropdown
-                  placeholder='Fight Names'
+                  placeholder='Job Names'
                   fluid
                   multiple
                   search
                   selection
                   onChange={(e,jobs) => jobsChangeOptions(jobs)}
-                  options={options}/>
+                  options={props.jobChoices}/>
               </Segment>
             </Segment.Group>
           </Grid.Column>
@@ -107,21 +99,21 @@ function PartyTableOptions(props) {
               <Segment>
                 <Button.Group>
                   <Button
-                    color={props.options.kills === 0 ? 'green' : 'standard'}
+                    color={props.options.kills === 0 ? 'green' : 'grey'}
                     onClick={() => killsChangeOptions(0)}
                   >
                     Kills
                   </Button>
                   <Button.Or />
                   <Button
-                    color={props.options.kills === 1 ? 'yellow' : 'standard'}
+                    color={props.options.kills === 1 ? 'yellow' : 'grey'}
                     onClick={() => killsChangeOptions(1)}
                   >
                     All
                   </Button>
                   <Button.Or />
                   <Button
-                    color={props.options.kills === 2 ? 'red' : 'standard'}
+                    color={props.options.kills === 2 ? 'red' : 'grey'}
                     onClick={() => killsChangeOptions(2)}
                   >
                     Wipes
