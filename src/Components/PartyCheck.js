@@ -191,7 +191,7 @@ function PartyCheck() {
         let newAllies = {}
 
         Object.keys(allies).filter((ally) => { // eslint-disable-line
-          let allyKillFiltered = allies[ally].filter((fights) => { // eslint-disable-line
+          const allyKillFiltered = allies[ally].map((fights) => { // eslint-disable-line
             if(options.kills === 0) {
               const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage === 0),job:fights.job}
 
@@ -210,12 +210,11 @@ function PartyCheck() {
               }
             }
           })
-
-          if(allyKillFiltered.length > 0) {
+          
+          if(allyKillFiltered.indexOf(undefined) === -1) {
             newAllies[ally] = allyKillFiltered
           }
         })
-
         return newAllies
       }
       else {
@@ -239,6 +238,7 @@ function PartyCheck() {
     const calculatePercentage = fights => {
       const allies = getAllies(fights)
       const filteredAllies = generateFilters(allies)
+      console.log(filteredAllies)
 
       const collapsedInJob = collapseAlliesInJob(filteredAllies);
 
