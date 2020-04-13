@@ -19,7 +19,7 @@ function PartyTableRow(props) {
                 textAlign="right"
               >{fight_date}</Table.Cell>
               <Table.Cell>{x.zoneName}</Table.Cell>
-              <Table.Cell>{(x.bossPercentage / 100)}</Table.Cell>
+              <Table.Cell>{(x.bossPercentage / 100)}%</Table.Cell>
               <Table.Cell></Table.Cell>
             </Table.Row>
           );
@@ -42,7 +42,7 @@ function PartyTableRow(props) {
       <Table.Row>
         <Table.Cell>{props.name}</Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
-        <Table.Cell>{props.percentage}</Table.Cell>
+        <Table.Cell>{props.percentage}%</Table.Cell>
         <Table.Cell>
           <Button
             key={props.name}
