@@ -184,11 +184,56 @@ function PartyCheck() {
       }
     }
 
+    const filterKills = allies => {
+      if(!Array.isArray(allies)) {
+        let newAllies = {}
+
+        Object.keys(allies).filter((ally) => {
+          let allyKillFiltered = allies[ally].filter((fights) => {
+            if(options.kills === 0) {
+              const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage === 0),job:fights.job}
+
+              if(filteredFight.fights.length > 0) {
+                return filteredFight
+              }
+            }
+            else if(options.kills === 1) {
+              return fights
+            }
+            else {
+              const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage !== 0),job:fights.job}
+
+              if(filteredFight.fights.length > 0) {
+                return filteredFight
+              }
+            }
+          })
+
+          if(allyKillFiltered.length > 0) {
+            newAllies[ally] = allyKillFiltered
+          }
+        })
+
+        return newAllies
+      }
+      else {
+        return allies
+      }
+    }
+
     const generateFilters = allies => {
+      delete allies['Limit Break']
+      delete allies['Multiple Players']
+      delete allies['Ground Effect']
+      
       const alliesFilteredJobs = filterJobs(allies);
       const alliesFilteredFights = filterFights(alliesFilteredJobs);
+      const alliesFilteredKills = filterKills(alliesFilteredFights);
 
-      return alliesFilteredFights;
+      console.log(alliesFilteredKills);
+
+
+      return alliesFilteredKills;
     }
 
     const calculatePercentage = fights => {
