@@ -31,8 +31,8 @@
             "kill": false,
             "partial": 0,
             "standardComposition": true,
-            "bossPercentage": 3389,
-            "fightPercentage": 3389,
+            "bossPercentage": 0,
+            "fightPercentage": 0,
             "lastPhaseForPercentageDisplay": 0,
             "maps": []
         },

@@ -42,7 +42,7 @@ function PartyTableRow(props) {
       <Table.Row>
         <Table.Cell>{props.name}</Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
-        <Table.Cell>{props.percentage}%</Table.Cell>
+        <Table.Cell id="percentage">{props.percentage}%</Table.Cell>
         <Table.Cell>
           <Button
             key={props.name}

@@ -2,23 +2,59 @@
 describe('PartyTableSearch functionality testing', () => {
   it('Contains the options dropdown button, clicks it, and sees a set of options', () => {
     cy.contains('Options').click();
-    cy.contains('Filter by Fight');
-    cy.contains('Filter by Job');
-    cy.contains('Filter by Result');
+    cy.contains('Fights');
+    cy.contains('Jobs');
+    cy.contains('Kills');
   });
 
   it('Clicks the options dropdown after expanding it, hiding the options', () => {
     cy.contains('Options').click();
-    cy.contains('Filter by Fight');
+    cy.contains('Fights');
+    cy.get('h4').contains('Fights');
     cy.contains('Options').click();
+    cy.get('h4').should('not.be.visible');
   })
 
   it('Selects a fight filter and removes that result from the table', () => {
+    // Set up the stub
+    cy.server();
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json');
+    cy.route('GET','/v1/report/fights/*','fixture:report.json');
+
+    cy.get('input').type('TheAlpacalypse');
+    cy.contains('Search').click();
+
+    cy.contains('Options').click();
   })
 
   it('Selects a job filter and removes that result from the table', () => {
+    // Set up the stub
+    cy.server();
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json');
+    cy.route('GET','/v1/report/fights/*','fixture:report.json');
+
+    cy.get('input').type('TheAlpacalypse');
+    cy.contains('Search').click();
+
+    cy.contains('Options').click();
   })
 
-  it('Selects a result filter and removes that result from the table', () => {
+  it('Selects the kill filter "Kills" and removes wipes from the table', () => {
+    // Set up the stub
+    cy.server();
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json');
+    cy.route('GET','/v1/report/fights/*','fixture:report.json');
+
+    cy.get('input').type('TheAlpacalypse');
+    cy.contains('Search').click();
+
+    cy.contains('Options').click();
+    cy.get('button').contains('Kills').click();
+    cy.get('tbody > tr').each(($value) => {
+      cy.wrap($value).contains('0.00%')
+    })
+
+    cy.get('button').contains('Wipes').click();
+    cy.get('tr > #percentage').should('not.eq','0.00%')
   })
 })
