@@ -1,6 +1,6 @@
 import React, { useState,useEffect,Fragment } from 'react';
 
-import {Grid,Container,Segment,Message } from 'semantic-ui-react'
+import { Divider,Grid,Container,Segment,Message } from 'semantic-ui-react'
 
 import PartyTable from './PartyTable'
 import FFLogsInput from './FFLogsInput'
@@ -320,9 +320,15 @@ function PartyCheck() {
       return(
         <Container>
           <Message>
-            <Message.Header>Welcome to PartyCheck!</Message.Header>
+            <Message.Header
+              as="h4"
+            >Welcome to PartyCheck!</Message.Header>
             <p>
               Please enter a valid FFLogs username.
+            </p>
+            <Divider />
+            <p>
+              After having a lot of issues clearing e5s, I started to notice the same people in parties over and over, and wanted a quick way to look through my logs to find them. Please do not use this site for harassment, it is purely for reference.
             </p>
           </Message>
         </Container>
