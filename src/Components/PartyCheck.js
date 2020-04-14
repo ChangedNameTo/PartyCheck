@@ -195,27 +195,29 @@ function PartyCheck() {
         let newAllies = {}
 
         Object.keys(allies).filter((ally) => { // eslint-disable-line
-          const allyKillFiltered = allies[ally].map((fights) => { // eslint-disable-line
-            if(options.kills === 0) {
-              const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage === 0),job:fights.job}
+          const allyKillFiltered = allies[ally]
+            .map((fights) => { // eslint-disable-line
+              if(options.kills === 0) {
+                const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage === 0),job:fights.job}
 
-              if(filteredFight.fights.length > 0) {
-                return filteredFight
+                if(filteredFight.fights.length > 0) {
+                  return filteredFight
+                }
               }
-            }
-            else if(options.kills === 1) {
-              return fights
-            }
-            else {
-              const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage !== 0),job:fights.job}
+              else if(options.kills === 1) {
+                return fights
+              }
+              else {
+                const filteredFight =  {fights:fights.fights.filter((x) => x.bossPercentage !== 0),job:fights.job}
 
-              if(filteredFight.fights.length > 0) {
-                return filteredFight
+                if(filteredFight.fights.length > 0) {
+                  return filteredFight
+                }
               }
-            }
-          })
+            })
+            .filter(x => x !== undefined)
           
-          if(allyKillFiltered.indexOf(undefined) === -1) {
+          if(allyKillFiltered.length !== 0) {
             newAllies[ally] = allyKillFiltered
           }
         })
