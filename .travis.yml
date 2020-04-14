@@ -17,7 +17,7 @@ install:
   - npm ci
   - npm install -g codecov
 script:
-  - npm start &
+  - npm start & & wait-on http://localhost:8080
   - npm run coverage:instrument
   - npm run coverage
   - npm run coverage:report
