@@ -33,7 +33,7 @@ Right now this is my personal project to learn react. That's not to say that I w
 
 - [x] Filter out Limit Breaks, Pets, "Multiple Players", etc.
 - [x] New favicon
-- [ ] Link directly to the pull/log on the subfight table
+- [x] Link directly to the pull/log on the subfight table
 - [x] Create a search bar to limit results down to a couple people
 - [x] Create a filter for certain fights/jobs
 - [ ] Create a "Party" side table that uses a button on the row to "Build" a party out of the people you're doing content with.
