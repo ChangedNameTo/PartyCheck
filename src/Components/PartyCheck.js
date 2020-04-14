@@ -337,7 +337,7 @@ function PartyCheck() {
         <Container>
           <Message>
             <Message.Header
-              as="h4"
+              as="h3"
             >Welcome to PartyCheck!</Message.Header>
             <p>
               Please enter a valid FFLogs username.
