@@ -60,8 +60,8 @@ function PartyTableRow(props) {
   return(
     <Fragment>
       <Table.Row>
-        <Table.Cell>{props.name}</Table.Cell>
-        <Table.Cell>{props.fights[0].server}</Table.Cell>
+        <Table.Cell>{props.name} - {props.fights[0].server}</Table.Cell>
+        <Table.Cell></Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
         <Table.Cell id="percentage">{props.percentage}%</Table.Cell>
         <Table.Cell>
