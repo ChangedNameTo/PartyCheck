@@ -18,7 +18,8 @@
     "request-promise": "^4.2.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "string-template": "^1.0.0"
+    "string-template": "^1.0.0",
+    "wait-on": "^4.0.2"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -26,7 +27,8 @@
     "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "coverage": "nyc npm run cypress:run & nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc npm run cypress:run --record",
+    "coverage:report": "nyc report --reporter=text-lcov | coveralls",
     "coverage:instrument": "npx nyc instrument src instrumented",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",

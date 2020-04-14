@@ -11,9 +11,6 @@ function PartyFooter() {
       style={{
         'width':'100%',
         'height':'60px',
-        'background-repeat': 'repeat',
-        'background-attachment': 'scroll',
-        'background-position': '0% 0%',
         'position':'fixed',
         'bottom':0,
       }}
@@ -21,7 +18,6 @@ function PartyFooter() {
       <Container textAlign='center'>
         <Button
           color="black"
-          content='black'
           icon
           inverted
           labelPosition='left'
