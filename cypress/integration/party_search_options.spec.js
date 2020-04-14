@@ -15,18 +15,6 @@ describe('PartyTableSearch functionality testing', () => {
     cy.get('h4').should('not.be.visible');
   })
 
-  it('Selects a fight filter and removes that result from the table', () => {
-    // Set up the stub
-    cy.server();
-    cy.route('GET','/v1/reports/user/*','fixture:fights.json');
-    cy.route('GET','/v1/report/fights/*','fixture:report.json');
-
-    cy.get('input').type('TheAlpacalypse');
-    cy.contains('Search').click();
-
-    cy.contains('Options').click();
-  })
-
   it('Selects a job filter and removes that result from the table', () => {
     // Set up the stub
     cy.server();
@@ -37,9 +25,32 @@ describe('PartyTableSearch functionality testing', () => {
     cy.contains('Search').click();
 
     cy.contains('Options').click();
+
+    cy.get('#jobFilterSelect').click()
+    cy.contains('Dancer').click()
+    cy.contains('Options').click();
+
+    cy.get('#showFightsButton').click()
+    cy.get('tr > #job').should('not.eq','WhiteMage')
   })
 
-  it('Selects the kill filter "Kills" and removes wipes from the table', () => {
+  it('Selects a fight filter and removes that result from the table', () => {
+    // Set up the stub
+    cy.server();
+    cy.route('GET','/v1/reports/user/*','fixture:fights.json');
+    cy.route('GET','/v1/report/fights/*','fixture:report.json');
+
+    cy.get('input').type('TheAlpacalypse');
+    cy.contains('Search').click();
+
+    cy.contains('Options').click();
+
+    cy.get('#fightFilterSelect').click()
+    cy.contains('Cinder Drift (Extreme)').click()
+    cy.contains('Options').click();
+  })
+
+  it('Selects the kill filter "Kills" and removes wipes/kills from the table', () => {
     // Set up the stub
     cy.server();
     cy.route('GET','/v1/reports/user/*','fixture:fights.json');
@@ -55,6 +66,8 @@ describe('PartyTableSearch functionality testing', () => {
     })
 
     cy.get('button').contains('Wipes').click();
+
+    cy.get('#showFightsButton').click()
     cy.get('tr > #percentage').should('not.eq','0.00%')
   })
 })

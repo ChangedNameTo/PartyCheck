@@ -18,6 +18,7 @@ function PartyTableRow(props) {
               <Table.Cell
                 textAlign="right"
               >{fight_date}</Table.Cell>
+              <Table.Cell id="job">{x.job}</Table.Cell>
               <Table.Cell>{x.zoneName}</Table.Cell>
               <Table.Cell>{(x.bossPercentage / 100)}%</Table.Cell>
               <Table.Cell></Table.Cell>
@@ -41,14 +42,17 @@ function PartyTableRow(props) {
     <Fragment>
       <Table.Row>
         <Table.Cell>{props.name}</Table.Cell>
+        <Table.Cell></Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
         <Table.Cell id="percentage">{props.percentage}%</Table.Cell>
         <Table.Cell>
           <Button
             key={props.name}
             onClick={() => showFights()}
+            fluid
+            id="showFightsButton"
           >
-            Show Fights {showFightsButton()} 
+            Show Fights {showFightsButton()}
           </Button>
         </Table.Cell>
       </Table.Row>

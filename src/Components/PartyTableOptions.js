@@ -50,6 +50,7 @@ function PartyTableOptions(props) {
               <Segment>
                 <Dropdown
                   placeholder='Fight Names'
+                  id="fightFilterSelect"
                   fluid
                   multiple
                   selection
@@ -76,6 +77,7 @@ function PartyTableOptions(props) {
               <Segment>
                 <Dropdown
                   placeholder='Job Names'
+                  id="jobFilterSelect"
                   fluid
                   multiple
                   search

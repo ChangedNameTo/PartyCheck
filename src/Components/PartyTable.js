@@ -52,7 +52,10 @@ function PartyTable(props) {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>
-              Name/Job
+              Name
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Job
             </Table.HeaderCell>
             <Table.HeaderCell
               sorted={column === 'pulls' ? direction : null}

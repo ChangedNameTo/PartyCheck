@@ -143,6 +143,24 @@
             "fightPercentage": 6453,
             "lastPhaseForPercentageDisplay": 0,
             "maps": []
+        },
+        {
+            "id": 9,
+            "start_time": 35544797,
+            "end_time": 35787849,
+            "boss": 69,
+            "name": "Ruby Weapon",
+            "zoneID": 906,
+            "zoneName": "Cinder Drift (Extreme)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 6453,
+            "fightPercentage": 6453,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
         }
     ],
     "lang": "en",
@@ -175,6 +193,9 @@
                 },
                 {
                     "id": 8
+                },
+                {
+                    "id": 9
                 }
             ]
         },
@@ -527,6 +548,9 @@
                 },
                 {
                     "id": 8
+                },
+                {
+                    "id": 9
                 }
             ]
         }
