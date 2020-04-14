@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/PartyCheck/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/PartyCheck/static/js/main.47f1dde5.chunk.js",
+    "main.js.map": "/PartyCheck/static/js/main.47f1dde5.chunk.js.map",
+    "runtime-main.js": "/PartyCheck/static/js/runtime-main.d8e0ab6d.js",
+    "runtime-main.js.map": "/PartyCheck/static/js/runtime-main.d8e0ab6d.js.map",
+    "static/css/2.1c16eba0.chunk.css": "/PartyCheck/static/css/2.1c16eba0.chunk.css",
+    "static/js/2.3f969db6.chunk.js": "/PartyCheck/static/js/2.3f969db6.chunk.js",
+    "static/js/2.3f969db6.chunk.js.map": "/PartyCheck/static/js/2.3f969db6.chunk.js.map",
+    "index.html": "/PartyCheck/index.html",
+    "precache-manifest.018c26700ad4714a7b7f0954ed28a8dc.js": "/PartyCheck/precache-manifest.018c26700ad4714a7b7f0954ed28a8dc.js",
+    "service-worker.js": "/PartyCheck/service-worker.js",
+    "static/css/2.1c16eba0.chunk.css.map": "/PartyCheck/static/css/2.1c16eba0.chunk.css.map",
+    "static/css/main.5ecd60fb.chunk.css.map": "/PartyCheck/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.3f969db6.chunk.js.LICENSE.txt": "/PartyCheck/static/js/2.3f969db6.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/PartyCheck/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d8e0ab6d.js",
+    "static/css/2.1c16eba0.chunk.css",
+    "static/js/2.3f969db6.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.47f1dde5.chunk.js"
+  ]
+}

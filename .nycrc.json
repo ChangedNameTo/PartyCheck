@@ -1,9 +1,0 @@
-{
-    "all":true,
-    "exclude":[
-        "**/src/serviceWorker.js",
-        "**/cypress/*",
-        "**/build/*",
-        "**/coverage/*"
-    ]
-}
