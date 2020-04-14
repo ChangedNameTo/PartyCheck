@@ -31,11 +31,11 @@ Right now this is my personal project to learn react. That's not to say that I w
 
 ## Todo
 
-- [ ] Filter out Limit Breaks, Pets, "Multiple Players", etc.
-- [ ] New favicon
+- [x] Filter out Limit Breaks, Pets, "Multiple Players", etc.
+- [x] New favicon
 - [ ] Link directly to the pull/log on the subfight table
-- [ ] Create a search bar to limit results down to a couple people
-- [ ] Create a filter for certain fights/jobs
+- [x] Create a search bar to limit results down to a couple people
+- [x] Create a filter for certain fights/jobs
 - [ ] Create a "Party" side table that uses a button on the row to "Build" a party out of the people you're doing content with.
 - [ ] Leverage cookies so you can save your username
 - [ ] Leverage cookies so you can save your character name
