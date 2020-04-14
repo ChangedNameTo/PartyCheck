@@ -34,7 +34,7 @@ function PartyTable(props) {
     else if (!(props.allies === null)){
       return (
         <Table.Row>
-          <Table.Cell colSpan='4'>
+          <Table.Cell colSpan='5'>
             <Segment>
               <Dimmer active>
                 <Loader />

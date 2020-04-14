@@ -222,6 +222,30 @@ function PartyCheck() {
       }
     }
 
+    const filterNaNs = allies => {
+      if(!Array.isArray(allies)) {
+        let newAllies = {}
+
+        Object.keys(allies).filter((ally) => { // eslint-disable-line
+          const allyKillFiltered = allies[ally].map((fights) => { // eslint-disable-line
+            const filteredFight =  {fights:fights.fights.filter((x) => x.boss !== 0),job:fights.job}
+
+            if(filteredFight.fights.length > 0) {
+              return filteredFight
+            }
+          })
+          
+          if(allyKillFiltered.indexOf(undefined) === -1) {
+            newAllies[ally] = allyKillFiltered
+          }
+        })
+        return newAllies
+      }
+      else {
+        return allies
+      }
+    }
+
     const generateFilters = allies => {
       // These aren't actually players but are reported as such in the API. Filtered here.
       delete allies['Limit Break']
@@ -231,31 +255,32 @@ function PartyCheck() {
       const alliesFilteredJobs = filterJobs(allies);
       const alliesFilteredFights = filterFights(alliesFilteredJobs);
       const alliesFilteredKills = filterKills(alliesFilteredFights);
+      const alliesFilteredNaNs = filterNaNs(alliesFilteredKills);
 
-      return alliesFilteredKills;
+      return alliesFilteredNaNs;
     }
 
     const calculatePercentage = fights => {
       const allies = getAllies(fights)
       const filteredAllies = generateFilters(allies)
-      console.log(filteredAllies)
 
       const collapsedInJob = collapseAlliesInJob(filteredAllies);
 
-      return Object.keys(collapsedInJob).map((x) => {
-        return {
-          name: x,
-          fights: collapsedInJob[x],
-          percentage: collapsedInJob[x]
-            .reduce(
-              (acc, cur, _, src) =>
-                acc + (!isNaN(parseInt(cur.bossPercentage)) ? parseInt(cur.bossPercentage) : 0) / 100 / src.length,
-              0
-            )
-            .toFixed(2),
-          pulls:collapsedInJob[x].length,
-        };
-      });
+      return Object.keys(collapsedInJob)
+        .map((x) => {
+          return {
+            name: x,
+            fights: collapsedInJob[x],
+            percentage: collapsedInJob[x]
+              .reduce(
+                (acc, cur, _, src) =>
+                  acc + (!isNaN(parseInt(cur.bossPercentage)) ? parseInt(cur.bossPercentage) : 0) / 100 / src.length,
+                0
+              )
+              .toFixed(2),
+            pulls:collapsedInJob[x].length,
+          };
+        });
     };
     
     const calPercentage = calculatePercentage(fights)
