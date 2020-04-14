@@ -17,8 +17,10 @@ install:
   - npm ci
   - npm install -g codecov
 script:
-  - npm start &
-  - $(npm bin)/cypress run --record
+  - npm start & wait-on http://localhost:3000
+  - npm run coverage:instrument
+  - npm run coverage
+  - npm run coverage:report
 deploy:
   provider: pages
   skip_cleanup: true

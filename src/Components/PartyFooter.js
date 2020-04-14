@@ -11,9 +11,6 @@ function PartyFooter() {
       style={{
         'width':'100%',
         'height':'60px',
-        'background-repeat': 'repeat',
-        'background-attachment': 'scroll',
-        'background-position': '0% 0%',
         'position':'fixed',
         'bottom':0,
       }}
@@ -21,11 +18,10 @@ function PartyFooter() {
       <Container textAlign='center'>
         <Button
           color="black"
-          content='black'
           icon
           inverted
           labelPosition='left'
-          onClick={() => window.open('https://github.com/ChangedNameTo/PartyCheck','_blank')}
+          href='https://github.com/ChangedNameTo/PartyCheck'
         >
           <Icon name='github' />
           View on Github
@@ -35,7 +31,7 @@ function PartyFooter() {
           inverted
           icon
           labelPosition='left'
-          onClick={() => window.open('https://www.linkedin.com/in/will--mitch/','_blank')}
+          href='https://www.linkedin.com/in/will--mitch/'
         >
           <Icon name='linkedin' />
           Find me on LinkedIn

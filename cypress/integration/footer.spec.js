@@ -3,11 +3,11 @@ describe('Checks that footer content renders', () => {
     cy.get('.raised')
   })
 
-  it('Opens PartyCheck and checks for the Github link', () => {
-    cy.contains('View on Github');
+  it('Opens PartyCheck and checks for the Github link, and clicks it', () => {
+    cy.contains('View on Github')
   });
   
-  it('Opens PartyCheck and checks for the LinkedIn link', () => {
-    cy.contains('Find me on LinkedIn');
+  it('Opens PartyCheck and checks for the LinkedIn link, and clicks it', () => {
+    cy.contains('Find me on LinkedIn')
   });
 })
