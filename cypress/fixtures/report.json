@@ -1,0 +1,909 @@
+{
+    "fights": [
+        {
+            "id": 1,
+            "start_time": 31369227,
+            "end_time": 31641491,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 6504,
+            "fightPercentage": 6504,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 2,
+            "start_time": 33017586,
+            "end_time": 33456172,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 0,
+            "fightPercentage": 0,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 3,
+            "start_time": 33625928,
+            "end_time": 33806434,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 7513,
+            "fightPercentage": 7513,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 4,
+            "start_time": 33891662,
+            "end_time": 34291372,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 3893,
+            "fightPercentage": 3893,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 5,
+            "start_time": 34530161,
+            "end_time": 34802274,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 5668,
+            "fightPercentage": 5668,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 6,
+            "start_time": 34890556,
+            "end_time": 35218015,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 5059,
+            "fightPercentage": 5059,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 7,
+            "start_time": 35362808,
+            "end_time": 35434144,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 9063,
+            "fightPercentage": 9063,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 8,
+            "start_time": 35544797,
+            "end_time": 35787849,
+            "boss": 69,
+            "name": "Ramuh",
+            "zoneID": 906,
+            "zoneName": "Eden's Verse: Fulmination (Savage)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 6453,
+            "fightPercentage": 6453,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        },
+        {
+            "id": 9,
+            "start_time": 35544797,
+            "end_time": 35787849,
+            "boss": 69,
+            "name": "Ruby Weapon",
+            "zoneID": 906,
+            "zoneName": "Cinder Drift (Extreme)",
+            "size": 8,
+            "difficulty": 101,
+            "kill": false,
+            "partial": 0,
+            "standardComposition": true,
+            "bossPercentage": 6453,
+            "fightPercentage": 6453,
+            "lastPhaseForPercentageDisplay": 0,
+            "maps": []
+        }
+    ],
+    "lang": "en",
+    "friendlies": [
+        {
+            "name": "Amelia Yukio",
+            "id": 118,
+            "guid": 1000117,
+            "type": "WhiteMage",
+            "server": "Siren",
+            "icon": "WhiteMage",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                },
+                {
+                    "id": 9
+                }
+            ]
+        },
+        {
+            "name": "Nice Anbolho",
+            "id": 116,
+            "guid": 1000115,
+            "type": "Astrologian",
+            "server": "Siren",
+            "icon": "Astrologian",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Asami Satokim",
+            "id": 1,
+            "guid": 1000000,
+            "type": "Astrologian",
+            "server": "Sargatanas",
+            "icon": "Astrologian",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Vivi Hrothga'raina",
+            "id": 119,
+            "guid": 1000118,
+            "type": "Samurai",
+            "server": "Sargatanas",
+            "icon": "Samurai",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Shady Candydealer",
+            "id": 6,
+            "guid": 1000005,
+            "type": "Samurai",
+            "server": "Cactuar",
+            "icon": "Samurai",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Fi Fyen",
+            "id": 117,
+            "guid": 1000116,
+            "type": "BlackMage",
+            "server": "Gilgamesh",
+            "icon": "BlackMage",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Jim Casey",
+            "id": 115,
+            "guid": 1000114,
+            "type": "Warrior",
+            "server": "Gilgamesh",
+            "icon": "Warrior",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Vin Licht",
+            "id": 120,
+            "guid": 1000119,
+            "type": "Summoner",
+            "server": "Gilgamesh",
+            "icon": "Summoner",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Shizukajanai Nyako",
+            "id": 4,
+            "guid": 1000003,
+            "type": "RedMage",
+            "server": "Sargatanas",
+            "icon": "RedMage",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Mukiro Tsukino",
+            "id": 5,
+            "guid": 1000004,
+            "type": "RedMage",
+            "server": "Gilgamesh",
+            "icon": "RedMage",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Yuki Kohana",
+            "id": 2,
+            "guid": 1000001,
+            "type": "WhiteMage",
+            "server": "Cactuar",
+            "icon": "WhiteMage",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Multiple Players",
+            "id": 10,
+            "guid": 1000009,
+            "type": "LimitBreak",
+            "icon": "LimitBreak",
+            "fights": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Hero Prime",
+            "id": 9,
+            "guid": 1000008,
+            "type": "Paladin",
+            "server": "Adamantoise",
+            "icon": "Paladin",
+            "fights": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Nagi Adept",
+            "id": 7,
+            "guid": 1000006,
+            "type": "Gunbreaker",
+            "server": "Jenova",
+            "icon": "Gunbreaker",
+            "fights": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "Ground Effect",
+            "id": 15,
+            "guid": 1000014,
+            "type": "LimitBreak",
+            "icon": "LimitBreak",
+            "fights": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 8
+                }
+            ]
+        },
+        {
+            "name": "Aurash Shatterscale",
+            "id": 8,
+            "guid": 1000007,
+            "type": "Dancer",
+            "server": "Jenova",
+            "icon": "Dancer",
+            "fights": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                },
+                {
+                    "id": 5
+                },
+                {
+                    "id": 6
+                },
+                {
+                    "id": 7
+                },
+                {
+                    "id": 8
+                },
+                {
+                    "id": 9
+                }
+            ]
+        }
+    ],
+    "enemies": [
+        {
+            "name": "Stormcloud",
+            "id": 13,
+            "guid": 11529,
+            "type": "NPC",
+            "icon": "NPC",
+            "fights": [
+                {
+                    "id": 1,
+                    "instances": 4,
+                    "groups": 3
+                },
+                {
+                    "id": 2,
+                    "instances": 4,
+                    "groups": 1
+                },
+                {
+                    "id": 3,
+                    "instances": 4,
+                    "groups": 2
+                },
+                {
+                    "id": 4,
+                    "instances": 4,
+                    "groups": 1
+                },
+                {
+                    "id": 5,
+                    "instances": 4,
+                    "groups": 1
+                },
+                {
+                    "id": 6,
+                    "instances": 4,
+                    "groups": 1
+                },
+                {
+                    "id": 8,
+                    "instances": 4,
+                    "groups": 1
+                }
+            ]
+        },
+        {
+            "name": "Ramuh",
+            "id": 3,
+            "guid": 11528,
+            "type": "Boss",
+            "icon": "Boss",
+            "fights": [
+                {
+                    "id": 1,
+                    "instances": 1
+                },
+                {
+                    "id": 2,
+                    "instances": 1
+                },
+                {
+                    "id": 3,
+                    "instances": 1
+                },
+                {
+                    "id": 4,
+                    "instances": 1
+                },
+                {
+                    "id": 5,
+                    "instances": 1
+                },
+                {
+                    "id": 6,
+                    "instances": 1
+                },
+                {
+                    "id": 7,
+                    "instances": 1
+                },
+                {
+                    "id": 8,
+                    "instances": 1
+                }
+            ]
+        },
+        {
+            "name": "Raiden",
+            "id": 12,
+            "guid": 11533,
+            "type": "NPC",
+            "icon": "NPC",
+            "fights": [
+                {
+                    "id": 1,
+                    "instances": 2
+                },
+                {
+                    "id": 2,
+                    "instances": 3
+                },
+                {
+                    "id": 3,
+                    "instances": 1
+                },
+                {
+                    "id": 4,
+                    "instances": 3
+                },
+                {
+                    "id": 5,
+                    "instances": 2
+                },
+                {
+                    "id": 6,
+                    "instances": 2
+                },
+                {
+                    "id": 7,
+                    "instances": 1
+                },
+                {
+                    "id": 8,
+                    "instances": 2
+                }
+            ]
+        },
+        {
+            "name": "Ramuh",
+            "id": 11,
+            "guid": 9020,
+            "type": "NPC",
+            "icon": "NPC",
+            "fights": [
+                {
+                    "id": 1,
+                    "instances": 29,
+                    "groups": 8
+                },
+                {
+                    "id": 2,
+                    "instances": 45,
+                    "groups": 14
+                },
+                {
+                    "id": 3,
+                    "instances": 25,
+                    "groups": 5
+                },
+                {
+                    "id": 4,
+                    "instances": 44,
+                    "groups": 12
+                },
+                {
+                    "id": 5,
+                    "instances": 29,
+                    "groups": 9
+                },
+                {
+                    "id": 6,
+                    "instances": 34,
+                    "groups": 10
+                },
+                {
+                    "id": 7,
+                    "instances": 4,
+                    "groups": 2
+                },
+                {
+                    "id": 8,
+                    "instances": 29,
+                    "groups": 8
+                }
+            ]
+        }
+    ],
+    "friendlyPets": [
+        {
+            "name": "Demi-Phoenix",
+            "id": 124,
+            "guid": 10488,
+            "type": "Pet",
+            "icon": "Pet",
+            "petOwner": 120,
+            "fights": [
+                {
+                    "id": 2,
+                    "instances": 3
+                },
+                {
+                    "id": 3,
+                    "instances": 1
+                },
+                {
+                    "id": 4,
+                    "instances": 3
+                },
+                {
+                    "id": 5,
+                    "instances": 2
+                },
+                {
+                    "id": 6,
+                    "instances": 3
+                },
+                {
+                    "id": 8,
+                    "instances": 2
+                }
+            ]
+        },
+        {
+            "name": "Earthly Star",
+            "id": 14,
+            "guid": 7245,
+            "type": "Pet",
+            "icon": "Pet",
+            "petOwner": 1,
+            "fights": [
+                {
+                    "id": 1,
+                    "instances": 2
+                }
+            ]
+        },
+        {
+            "name": "Earthly Star",
+            "id": 122,
+            "guid": 7245,
+            "type": "Pet",
+            "icon": "Pet",
+            "petOwner": 116,
+            "fights": [
+                {
+                    "id": 2,
+                    "instances": 3
+                },
+                {
+                    "id": 3,
+                    "instances": 3
+                },
+                {
+                    "id": 4,
+                    "instances": 3
+                },
+                {
+                    "id": 5,
+                    "instances": 3
+                },
+                {
+                    "id": 6,
+                    "instances": 3
+                },
+                {
+                    "id": 7,
+                    "instances": 1
+                },
+                {
+                    "id": 8,
+                    "instances": 3
+                }
+            ]
+        },
+        {
+            "name": "Demi-Bahamut",
+            "id": 123,
+            "guid": 6982,
+            "type": "Pet",
+            "icon": "Pet",
+            "petOwner": 120,
+            "fights": [
+                {
+                    "id": 2,
+                    "instances": 4
+                },
+                {
+                    "id": 3,
+                    "instances": 2
+                },
+                {
+                    "id": 4,
+                    "instances": 3
+                },
+                {
+                    "id": 5,
+                    "instances": 2
+                },
+                {
+                    "id": 6,
+                    "instances": 3
+                },
+                {
+                    "id": 7,
+                    "instances": 1
+                },
+                {
+                    "id": 8,
+                    "instances": 2
+                }
+            ]
+        },
+        {
+            "name": "Ruby Carbuncle",
+            "id": 121,
+            "guid": 1013,
+            "type": "Pet",
+            "icon": "Pet",
+            "petOwner": 120,
+            "fights": [
+                {
+                    "id": 2,
+                    "instances": 9
+                },
+                {
+                    "id": 3,
+                    "instances": 4
+                },
+                {
+                    "id": 4,
+                    "instances": 7
+                },
+                {
+                    "id": 5,
+                    "instances": 5
+                },
+                {
+                    "id": 6,
+                    "instances": 6
+                },
+                {
+                    "id": 7,
+                    "instances": 2
+                },
+                {
+                    "id": 8,
+                    "instances": 5
+                }
+            ]
+        }
+    ],
+    "enemyPets": [],
+    "phases": [],
+    "logVersion": 39,
+    "gameVersion": 1,
+    "title": "Eden's Verse",
+    "owner": "TheAlpacalypse",
+    "start": 1586187750515,
+    "end": 1586223561669,
+    "zone": 33,
+    "exportedCharacters": []
+}
