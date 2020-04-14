@@ -342,14 +342,14 @@ function PartyCheck() {
           <Grid>
             <Grid.Row>
               <Grid.Column
-                width={13}
               >
                 <FFLogsInput
                   onClick = {(i) => setUsername(i)}
                 />
               </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
               <Grid.Column
-                width={3}
               >
                 <PartyTableFilters
                   visible={visible}

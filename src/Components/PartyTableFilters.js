@@ -15,6 +15,7 @@ function PartyTableFilters(props) {
     <Container>
       <Button
         onClick={props.onClick}
+        fluid
       >
         Options {showOptionsButton()}
       </Button>
