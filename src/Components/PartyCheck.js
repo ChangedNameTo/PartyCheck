@@ -44,7 +44,7 @@ function PartyCheck() {
       return Object.keys(allies).reduce(
         (acc, cur) => ({
           ...acc,
-          [cur]: allies[cur].flatMap(f => f.fights.map(x => ({ ...x, job: f.job })))
+          [cur]: allies[cur].flatMap(f => f.fights.map(x => ({ ...x, job: f.job, url: f.url, server:f.server })))
         }),
         {}
       );
@@ -54,15 +54,19 @@ function PartyCheck() {
       return fights
         .flatMap(fight =>
           fight.friendlies.reduce(
-            (acc, friendly) => ({
-              ...acc,
-              [friendly.name]: {
-                fights: friendly.fights.map(({ id }) => {
-                  return {...fight.fights[id - 1],realtime:(fight.start + fight.fights[id - 1].start_time)}
-                }),
-                job: friendly.type,
+            (acc, friendly) => {
+              return {
+                ...acc,
+                [friendly.name]: {
+                  fights: friendly.fights.map(({ id }) => {
+                    return {...fight.fights[id - 1],realtime:(fight.start + fight.fights[id - 1].start_time)}
+                  }),
+                  job: friendly.type,
+                  server: friendly.server,
+                  url:fight.url
+                }
               }
-            }),
+            },
             {}
           )
         )
@@ -228,7 +232,12 @@ function PartyCheck() {
 
         Object.keys(allies).filter((ally) => { // eslint-disable-line
           const allyKillFiltered = allies[ally].map((fights) => { // eslint-disable-line
-            const filteredFight =  {fights:fights.fights.filter((x) => x.boss !== 0),job:fights.job}
+            const filteredFight =  {
+              fights:fights.fights.filter((x) => x.boss !== 0),
+              job:fights.job,
+              server:fights.server,
+              url:fights.url,
+            }
 
             if(filteredFight.fights.length > 0) {
               return filteredFight
@@ -294,7 +303,12 @@ function PartyCheck() {
           .filter(report => report.title === "Eden's Verse" || report.title === "Trials (Extreme)")
           .map(report => axios.get(`https://www.fflogs.com/v1/report/fights/${report.id}?api_key=${API_KEY}`))
       ).then(result => {
-        const fights = result.flatMap((r) => r.data);
+        const fights = result.reduce((acc,cur) => {
+          const re = /fights\/(\S+)\?/;
+          cur.data['url'] = cur.config.url.match(re)[1]
+          return [...acc,cur.data]
+        },[])
+        
         setFights(fights)
       });
     }

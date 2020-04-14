@@ -8,11 +8,30 @@ function PartyTableRow(props) {
     setVisible(!visible)
   }
 
+  const fflogsURL = pull => {
+    if(pull.url !== undefined) {
+      const parsedURL = `https://www.fflogs.com/reports/${pull.url}#fight=${pull.id}`
+
+      return (
+        <Button
+          fluid
+          color='blue'
+          key={pull.realtime}
+          href={parsedURL}
+          target="_blank"
+        >
+          View Pull
+        </Button>
+      )
+    }
+  }
+
   const subRows = () => {
     if(visible) {
       return (
         props.fights.map((x,i) => {
           const fight_date = new Date(x.realtime).toDateString();
+
           return(
             <Table.Row>
               <Table.Cell
@@ -21,7 +40,7 @@ function PartyTableRow(props) {
               <Table.Cell id="job">{x.job}</Table.Cell>
               <Table.Cell>{x.zoneName}</Table.Cell>
               <Table.Cell>{(x.bossPercentage / 100)}%</Table.Cell>
-              <Table.Cell></Table.Cell>
+              <Table.Cell>{fflogsURL(x)}</Table.Cell>
             </Table.Row>
           );
         })
@@ -42,7 +61,7 @@ function PartyTableRow(props) {
     <Fragment>
       <Table.Row>
         <Table.Cell>{props.name}</Table.Cell>
-        <Table.Cell></Table.Cell>
+        <Table.Cell>{props.fights[0].server}</Table.Cell>
         <Table.Cell>{props.fights.length}</Table.Cell>
         <Table.Cell id="percentage">{props.percentage}%</Table.Cell>
         <Table.Cell>
