@@ -1,6 +1,7 @@
 import React, { useState,useEffect,Fragment } from 'react';
 
 import { Divider,Grid,Container,Segment,Message } from 'semantic-ui-react'
+import Cookies from 'js-cookie'
 
 import PartyTable from './PartyTable'
 import FFLogsInput from './FFLogsInput'
@@ -21,9 +22,20 @@ function PartyCheck() {
   const [fightChoices, setFightChoices] = useState([]);
   const [jobChoices, setJobChoices] = useState([]);
 
+  useEffect(() => {
+    if(Cookies.get('username')) {
+      setUsername(Cookies.get('username'))
+    }
+    if(Cookies.get('reports')) {
+      setReports(Cookies.get('reports'))
+    }
+  },[])
+
   // When the username changes, queries fflogs api and sets the reports output
   useEffect(() => {
     if(username) {
+      Cookies.set('username',username)
+
       axios
         .get(`https://www.fflogs.com/v1/reports/user/${username}?api_key=${API_KEY}`)
         .then(reports => {
@@ -127,7 +139,7 @@ function PartyCheck() {
 
           return null;
         })
-        
+
         return newAllies
       }
       else {
@@ -144,7 +156,7 @@ function PartyCheck() {
 
     const filterFights = allies => {
       if(!Array.isArray(allies)) {
-        const fightChoiceNames = Object.keys(allies) 
+        const fightChoiceNames = Object.keys(allies)
           .reduce((acc,key) => {
             return [...acc,...pullFights(allies[key])]
           },[])
@@ -216,7 +228,7 @@ function PartyCheck() {
               }
             })
             .filter(x => x !== undefined)
-          
+
           if(allyKillFiltered.length !== 0) {
             newAllies[ally] = allyKillFiltered
           }
@@ -245,7 +257,7 @@ function PartyCheck() {
               return filteredFight
             }
           })
-          
+
           if(allyKillFiltered.indexOf(undefined) === -1) {
             newAllies[ally] = allyKillFiltered
           }
@@ -262,7 +274,7 @@ function PartyCheck() {
       delete allies['Limit Break']
       delete allies['Multiple Players']
       delete allies['Ground Effect']
-      
+
       const alliesFilteredJobs = filterJobs(allies);
       const alliesFilteredFights = filterFights(alliesFilteredJobs);
       const alliesFilteredKills = filterKills(alliesFilteredFights);
@@ -293,13 +305,15 @@ function PartyCheck() {
           };
         });
     };
-    
+
     const calPercentage = calculatePercentage(fights)
     setPercentage(calPercentage);
   },[fights,setPercentage,options])
 
   useEffect(() => {
     if (reports && reports.data) {
+      Cookies.set('reports',reports)
+
       Promise.all(
         reports.data
           .filter(report => report.title === "Eden's Verse" || report.title === "Trials (Extreme)")
@@ -310,7 +324,7 @@ function PartyCheck() {
           cur.data['url'] = cur.config.url.match(re)[1]
           return [...acc,cur.data]
         },[])
-        
+
         setFights(fights)
       });
     }
@@ -366,6 +380,7 @@ function PartyCheck() {
               <Grid.Column
               >
                 <FFLogsInput
+                  username={username}
                   onClick = {(i) => setUsername(i)}
                 />
               </Grid.Column>
@@ -380,7 +395,7 @@ function PartyCheck() {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column 
+              <Grid.Column
                 centered="true"
               >
                 <PartyTableOptions

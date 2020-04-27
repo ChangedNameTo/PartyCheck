@@ -4,8 +4,9 @@ import {Input} from 'semantic-ui-react';
 function FFLogsInput(props) {
   const [username, setUsername] = useState('');
 
-  const handleChange = (x) => {if(x !== username) {
-    setUsername(x.value)}};
+  const handleChange = (x) => {if(x !== username) {setUsername(x.value)}};
+
+  const placeholderVal = () => props.username ? props.username : 'Enter your FFLogs Username...';
 
   return (
     <div>
@@ -22,7 +23,7 @@ function FFLogsInput(props) {
         icon = 'search'
         iconPosition = 'left'
         name = "fflogslink"
-        placeholder = 'Enter your FFLogs Username'
+        placeholder = {placeholderVal()}
       />
     </div>
   );
